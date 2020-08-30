@@ -1,8 +1,8 @@
-# seeSWAP
+# SeeSWAP
 ## Portfolio balancer and asset exchange
 
-![Screenshot1](media/seeswapnew.png)
+[https://seeswap.one](https://seeswap.one)
 
-![Screenshot2](media/seeswaplite.png)
+![Screenshot1](media/seeswap.jpg)
 
 Under construction...
