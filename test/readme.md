@@ -17,3 +17,4 @@ Current Results:
 - On testing getColor (BRONZE) result not available
 - On testing getBLabs(), collector (owner) not returned
 - On testing setBLabs(owner): collector not set
+- On testing newBPool(): pool not generated
