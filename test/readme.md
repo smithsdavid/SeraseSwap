@@ -5,7 +5,7 @@ Requirements to deploy BFactory:
 - $ npm install @harmony-js/core
 - $ mkdir contracts
 - Save BFactory.json to contracts folder
-- Save deployFactory.json to current folder
+- Save deployFactory.js to current folder
 - $ node deployFactory
 - Result should be your Factory address
 - Test factory methods like getBLabs, getColor, etc
