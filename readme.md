@@ -5,7 +5,20 @@
 
 ![Screenshot1](media/seeswap.jpg)
 
-Under construction...
+## How to use SeeSWAP Portfolio Balancer?
+
+1. First install [Harmony One Wallet](http://harmony.one/onewallet) extension on your Chrome or Brave browser
+2. Then create one account in testnet and give it a name like 'Harmony Testnet'
+3. Add some funds to testnet account using Pops faucet at https://faucet.pops.one/
+4. Request test tokens on Twitter by replying to @KuyawaK 'Send tokens'
+5. Add the list of tokens to your wallet, just copy/paste the address and hit 'Add'
+6. Go to [SeeSWAP](https://seeswap.one/swap) web page and start swapping tokens
+7. Select the pool form the list of available pools and click the yellow 'Swap' button
+8. Enter the amount to swap according to the current market prices
+9. Hit the red 'Swap' button and wait 5 secs for the approval confirmation
+10. Then wait another 5 secs for the transfer confirmation
+
+That's it! Swapping Harmony tokens in less than ten seconds and less than one cent in fees!
 
 ## Tokens in Testnet
 
