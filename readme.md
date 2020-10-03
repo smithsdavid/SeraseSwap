@@ -39,9 +39,9 @@ That's it! Swapping Harmony tokens in less than ten seconds and less than one ce
 • EOSs  0xf54f91a34C0280a8F3c11819a5364E4A67181ECe
 ```
 
-### SeeSwap on Testnet is not available anymore
+## SeeSwap on Testnet is not available anymore
 
-## How to use SeeSWAP Portfolio Balancer on Testnet?
+## ~~How to use SeeSWAP Portfolio Balancer on Testnet?~~
 
 1. First install [Harmony One Wallet](http://harmony.one/onewallet) extension on your Chrome or Brave browser
 2. Then create an account in testnet and give it a name like 'Harmony Testnet'
