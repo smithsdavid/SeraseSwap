@@ -9,10 +9,10 @@
 
 1. First install [Harmony One Wallet](http://harmony.one/onewallet) extension on your Chrome or Brave browser
 2. Then create an account in mainnet and give it a name like 'Harmony Mainnet'
-3. Add some funds to your account, there are no faucets so go to Binance and buy some ONE
+3. Add some funds to your account, there are no faucets so go to [Binance](https://binance.com) and buy some ONE
 4. Check the list of tokens below and add to your wallet those you're going to use
 5. To add tokens to your wallet, just copy/paste the address and hit 'Add'
-6. Go to [SeeSWAP](https://seeswap.one/swap) web page and start swapping tokens
+6. Go to [SeeSwap.one](https://seeswap.one/swap) web page and start swapping tokens
 7. You will need ONEs tokens to swap other assets, use the wrapper box to change ONE for ONEs
 8. Select the pool form the list of available pools and click the yellow 'Swap' button
 9. Enter the amount to swap according to the current market prices
@@ -44,7 +44,7 @@ That's it! Swapping Harmony tokens in less than ten seconds and less than one ce
 3. Add some funds to testnet account using Pops faucet at https://faucet.pops.one/
 4. Request test tokens on Twitter by replying to @KuyawaK 'Send tokens'
 5. Add the list of tokens to your wallet, just copy/paste the address and hit 'Add'
-6. Go to [SeeSWAP](https://seeswap.one/swap) web page and start swapping tokens
+6. Go to [test.SeeSwap.one](https://test.seeswap.one/swap) web page and start swapping tokens
 7. Select the pool form the list of available pools and click the yellow 'Swap' button
 8. Enter the amount to swap according to the current market prices
 9. Hit the red 'Swap' button and wait 5 secs for the approval confirmation
