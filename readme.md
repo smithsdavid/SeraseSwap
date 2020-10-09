@@ -1,5 +1,5 @@
 # SeeSwap
-## Portfolio balancer and asset exchange
+## Portfolio balancer and assets exchange
 
 [https://seeswap.one](https://seeswap.one)
 
