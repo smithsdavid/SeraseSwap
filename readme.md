@@ -5,17 +5,15 @@
 
 ![Screenshot1](media/seeswap.jpg)
 
-
-
 ## How to use SeeSWAP Portfolio Balancer on Mainnet?
 
 1. First install [Harmony One Wallet](http://harmony.one/onewallet) extension on your Chrome or Brave browser
 2. Then create an account in mainnet and give it a name like 'Harmony Mainnet'
-3. Add some funds to your account, there are no faucets so go to Binance and buy some ONEs
+3. Add some funds to your account, there are no faucets so go to Binance and buy some ONE
 4. Check the list of tokens below and add to your wallet those you're going to use
 5. To add tokens to your wallet, just copy/paste the address and hit 'Add'
 6. Go to [SeeSWAP](https://seeswap.one/swap) web page and start swapping tokens
-7. You will need USDs tokens to swap other assets, use the wrapper box to change ONE for USDs
+7. You will need ONEs tokens to swap other assets, use the wrapper box to change ONE for ONEs
 8. Select the pool form the list of available pools and click the yellow 'Swap' button
 9. Enter the amount to swap according to the current market prices
 10. Hit the red 'Swap' button and wait 5 secs for the approval confirmation
@@ -39,9 +37,7 @@ That's it! Swapping Harmony tokens in less than ten seconds and less than one ce
 • EOSs  0xf54f91a34C0280a8F3c11819a5364E4A67181ECe
 ```
 
-## SeeSwap on Testnet is not available anymore
-
-## ~~How to use SeeSWAP Portfolio Balancer on Testnet?~~
+## How to use SeeSWAP Portfolio Balancer on Testnet?
 
 1. First install [Harmony One Wallet](http://harmony.one/onewallet) extension on your Chrome or Brave browser
 2. Then create an account in testnet and give it a name like 'Harmony Testnet'
@@ -59,16 +55,10 @@ That's it! Swapping Harmony tokens in less than ten seconds and less than one ce
 ## Tokens in Testnet
 
 ```
-•  SEE 0x5B4596E8fC1C5e4817b65FFBb82522C8B29A8b52
-• tONE 0xBcffe119ba1dCEdDB9BfeD1Ac21d475033c6F771
-• tBTC 0x34c68Ac37eA92127C6A3FB4771560343305e7a80
-• tETH 0x3d9ded6269271b0377530ba3c9d2ea1e310d204d
-• tXRP 0xa96e42155009dfcebb89b9895826dba982e5f6f9
-• tUSD 0xf0c4beb5ccd5e26aff44ed7dcbbfabc7c5334a3a
-• tBNB 0x861df59a84bb817918bbf8e0a16ac377b6d6f873
-• tLNK 0x910e5ad539b1ee5ef53efb6c9896f54830e926b6
-• tDOT 0xb7d843692bf193f132ed09dca190e8c27fd8ef64
-• tBCH 0x19be116818d23c361abd975636428e62b8cb106a
-• tBSV 0x4513b520ed9f87217eed157107ca8f1b99df05bf
-• tLTC 0x67474Bf0B65597F156ad66AAeaAdafC759b7447e
+• ONEs  0x1C7d8A94ED3ac92863D61B4717e0Bbc3e9b1b430
+• USDs  0x27Af6E14d69340e33a941f1136e7147e65E2E63a
+• SEE   0x4E2653B73726b979E9e8a38594f61818BAe15cAA
+• ARANK 0xbDE7800c2A4ba6D56b4CABd80e3022a4d17e11bA
+• EUSK  0x7320e4105f6D189045db506EA266B3261C88663B
+• SEED  0x2E14dC3EF14716c6ec3AF4Bb2D69171254368871
 ```
