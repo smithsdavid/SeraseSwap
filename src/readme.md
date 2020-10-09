@@ -1,0 +1,3 @@
+# Seeswap Source
+
+GPL3
