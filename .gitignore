@@ -6,8 +6,3 @@ npm-debug.log
 *.env
 *.dev
 .DS_Store
-logs.txt
-
-# Private folders
-docs
-work

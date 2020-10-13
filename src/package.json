@@ -1,0 +1,23 @@
+{
+  "name": "SeeSwap",
+  "version": "1.0.0",
+  "description": "Harmony SeeSwap",
+  "license": "GPL3",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "engines": {
+    "node": "14.4.0"
+  },
+  "dependencies": {
+    "@harmony-js/core": "^0.1.54",
+    "ejs": "^3.1.5",
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1"
+  },
+  "keywords": [
+    "Harmony",
+    "SeeSwap"
+  ]
+}

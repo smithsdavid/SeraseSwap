@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SeeSwap</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1">
+	<meta name="application-name" content="SeeSwap">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<link rel="stylesheet" type="text/css" href="styles/main.css">
+	<link rel="stylesheet" type="text/css" href="styles/swap.css">
+    <link rel="icon" href="static/mobile-icon.png">
+    <link rel="icon" sizes="192x192" href="static/mobile-icon-192.png">
+    <link rel="apple-touch-icon" href="static/mobile-icon-apple.png"/>
+</head>
+<body class="dark-mode">
+
+<header>
+	<wrap>
+		<div id="topleft">
+			<a class="index" href="/"><img id="logo" src="media/seeswap-logo.png"></a>
+			<div id="brand">
+				<h1><a class="index" href="/">SeeSwap</a></h1>
+				<h2>Portfolio Balancer on Harmony Network</h2>
+			</div>
+		</div>
+		<div id="topright">
+			<div id="buttons">
+				<button id="swap-theme" onclick="swapMode()"><img id="theme-icon" src="media/daynight.png" title="Dark mode"></button>
+				<button id="connect" onclick="onWallet()">Connect Wallet</button>
+			</div>
+			<div id="network">
+				<h3 id="netlabel">MAINNET</h3>
+			</div>
+		</div>
+	</wrap>
+</header>
+
+<div id="main">
+	<wrap>
+		<div id="actions" class="action-tabs">
+			<a class="action-tab action-sel" noref>Swap Assets</a>
+			<a class="action-tab" href="/pools">Pool Stakes</a>
+		</div>
+		<div id="market-index">
+			<div class="cell">
+				<label>Last Price</label>
+				<span id="coin-price">0.00</span>
+			</div>
+			<div class="cell">
+				<label>Volume <b id="index-base">ONE</b></label>
+				<span id="total-volume">0 M</span>
+			</div>
+			<div class="cell">
+				<label>Volume <b>USD</b></label>
+				<span id="total-volusd">0 M</span>
+			</div>
+			<div class="cell">
+				<label>Change Percent</label>
+				<span id="total-percent">0.00%</span>
+			</div>
+			<div class="cell">
+				<label>Change 24h</label>
+				<span id="total-change24">0.00</span>
+			</div>
+		</div>
+	</wrap>
+
+	<wrap>
+		<div id="middle">
+
+			<div id="chart-content">
+				<div id="chart-area">
+					<div id="asset-info">
+						<div class="chart-cell">
+							<label>Open</label>
+							<span id="price-open">0.00000000</span>
+						</div>
+						<div class="chart-cell">
+							<label>High</label>
+							<span id="price-high">0.00000000</span>
+						</div>
+						<div class="chart-cell">
+							<label>Low</label>
+							<span id="price-low">0.00000000</span>
+						</div>
+						<div class="chart-cell">
+							<label>Close</label>
+							<span id="price-close">0.00000000</span>
+						</div>
+						<div class="chart-cell">
+							<label>Spread</label>
+							<span id="price-spread">0.0000%</span>
+						</div>
+					</div>
+					<div id="chart"></div>
+				</div>
+				<div id="chart-info">
+					<h1 id="chart-label">ONE/USD</h1> 
+					<div id="chart-menu"> 
+						<button id="chart-action0" class="chart-action" onclick="onChartPeriod(0)">1 Hour</button> 
+						<button id="chart-action1" class="chart-action" onclick="onChartPeriod(1)">4 Hours</button> 
+						<button id="chart-action2" class="chart-action selected" onclick="onChartPeriod(2)">24 Hours</button> 
+						<button id="chart-action3" class="chart-action" onclick="onChartPeriod(3)">7 Days</button> 
+						<button id="chart-action4" class="chart-action" onclick="onChartPeriod(4)">1 Month</button> 
+					</div> 
+				</div>
+			</div>
+
+			<div id="entry-form">
+				<h1><a name="form">Swap Assets</a></h1>
+				<div id="entry-price" class="entry-panel">
+					<label><span id="pool-price-label">ONEs/USDs</span> PRICE</label>
+					<input type="text" id="pool-price-value" disabled="disabled" value="0.00000000">
+				</div>
+				<div id="entry-sell" class="entry-panel">
+					<label class="op-title"><img id="sell-asset-icon" src="assets/ones.png"> <span id="sell-asset-symbol">BTC</span> <b class="red">SELL</b></label>
+					<input type="text" id="sell-asset-qty" autocomplete="off" placeholder="amount to sell">
+				</div>
+				<div id="swapper"><img src="media/switch.png" onclick="onSwitch()"></div>
+				<div id="entry-buy" class="entry-panel">
+					<label class="op-title"><img id="buy-asset-icon" src="assets/usds.png"> <span id="buy-asset-symbol">USD</span> <b class="grn">BUY</b></label>
+					<input type="text" id="buy-asset-qty" autocomplete="off" placeholder="amount to buy">
+				</div>
+				<button id="entry-swap" onclick="onSwapExecute()" disabled>SWAP</button>
+				<div id="signtxs" class="normal">
+					<span id="signmsg"></span>
+				</div>
+				<div id="status" class="normal">
+					<img id="spinner" width="12px" height="12px" src="media/spinner.gif"/>
+					<span id="message"></span>
+				</div>
+			</div>
+
+		</div>
+	</wrap>
+
+	<wrap>
+		<div id="pools-wrap">
+			<table id="pools-list">
+				<thead>
+					<tr><th colspan="2">&nbsp;</th><th colspan="2">Base</th><th colspan="2">Quote</th><th colspan="2">&nbsp;</th></tr>
+					<tr><th>&nbsp;</th><th>Pool</th><th>Balance</th><th>Price</th><th>Balance</th><th>Price</th><th>Swap Fee</th><th>&nbsp;</th></tr>
+				</thead>
+				<tbody>
+					<tr><td><img class="pool-icon" src="assets/ones.png"> <img class="pool-icon" src="assets/usds.png"></td><td>ONEs/USDS </td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td>0.0000</td><td><button class="pool-swap" disabled="disabled">N/A</button></td> </tr>
+				</tbody>
+			</table>
+		</div>
+	</wrap>
+
+	<wrap>
+		<div id="wrap-form">
+			<div id="wrap-tabs">
+				<button id="wrap-tab1" class="wrap-tab wrap-sel" onclick="wrapTabSel(1)">ONE/ONEs</button>
+				<button id="wrap-tab2" class="wrap-tab" onclick="wrapTabSel(2)">ONE/USDs</button>
+			</div>
+			<div id="usds-form">
+				<h1>Need <span id="wrap-token">ONEs</span> tokens?</h1>
+				<div id="wrap-price" class="wrap-panel">
+					<label><span id="wrap-price-label">ONE/ONEs</span> PRICE</label>
+					<input type="text" id="wrap-price-value" disabled="disabled" value="1.00000000">
+				</div>
+				<div id="wrap-sell" class="wrap-panel">
+					<label class="op-title"><img id="wrap-sell-icon" src="assets/one.png"> <span id="wrap-sell-symbol">ONE</span> <b class="red">SELL</b></label>
+					<input type="text" id="wrap-sell-qty" autocomplete="off" placeholder="amount to sell">
+				</div>
+				<div id="wrap-switch"><img src="media/switch.png" onclick="onWrapSwitch()"></div>
+				<div id="wrap-buy" class="wrap-panel">
+					<label class="op-title"><img id="wrap-buy-icon" src="assets/ones.png"> <span id="wrap-buy-symbol">ONEs</span> <b class="grn">BUY</b></label>
+					<input type="text" id="wrap-buy-qty" autocomplete="off" placeholder="amount to buy">
+				</div>
+				<button id="wrap-swap" onclick="onWrapExecute()" disabled>WRAP</button>
+				<div id="wrap-txs" class="normal">
+					<span id="wrap-msg"></span>
+				</div>
+				<div id="wrap-status" class="normal">
+					<img id="wrap-spinner" width="12px" height="12px" src="media/spinner.gif"/>
+					<span id="wrap-message">1% fee charged on every transaction</span>
+				</div>
+			</div>
+		</div>	
+		<div id="wrap-info">
+			<p><img class="wrap-media" src="media/see.png" width="64"> You will need ONEs or USDs tokens to use SeeSwap portfolio balancer. These tokens can be exchanged for any asset available in the Harmony network and are also used for pool staking and earning dividends.</p>
+			<p><img class="wrap-media" src="media/wallet.png" width="64"> Buy ONEs or USDs tokens with your Harmony wallet and swap them with other assets in the network. You can join pools and earn dividends, and you can always sell them back for ONE at any time.</p>
+			<p><img class="wrap-media" src="media/bank.png" width="64"> ONEs and USDs tokens are backed by ONE and their supply and collateral are available for audits. Rest assured your assets are protected by blockchain immutability and always stored in your own wallet.</p>
+		</div>
+	</wrap>
+
+	<wrap>
+		<div id="token-info">
+			<h1>Harmony Tokens</h1>
+			<h3>You can swap as many tokens as you wish</h3>
+			<p>Harmony tokens are based on the HRC20 token specification, derived from ERC20 smart contracts they can be easily implemented in Harmony Network and all Ethereum compatible networks.</p>
+			<p>In order to add tokens to your Harmony wallet, select the <b>Tokens</b> panel and press the <b>(+)</b> button, then enter the token address as specified in this list and the wallet will autommatically fetch the token info. Once you click on the <b>Add</b> button the token will appear on the list and the balance shown.</p>
+			<h3>Now you're ready to swap tokens on SeeSwap!</h3>
+		</div>
+		<div id="token-address">
+			<h3>Token contract addresses on MAINNET</h3>
+			<pre>ONEs  0xB2f2C1D77113042f5ee9202d48F6d15FB99efb63</pre>
+			<pre>USDs  0x06F034131F6d24A07b3dE3F3cCCC34Ca1fA9C064</pre>
+			<pre>SEE   0x7fA202fdb3B0eCB975119cc3A895BFB3104aDA68</pre>
+			<pre>ARANK 0xBD16b0B2eB520b7Ff4A4156d367Ee359Ac19c531</pre>
+			<pre>EUSK  0x85a1DD919cd605aa2EAD4b01ff1190504BcAb609</pre>
+			<pre>SEED  0x793DAC3Ec4969A5BEE684BcF4290d52feB8F51b4</pre>
+		</div>
+	</wrap>
+
+	<h3 id="swaptitle">Swap Harmony Assets <i>•</i> Join Staking Pools <i>•</i> DeFi on Harmony Network</h3>
+</div>
+
+<footer>
+	<wrap>
+		<div id="rights">
+			<img id="logo-foot" src="media/seeswap-logo.png"> 
+			<h1>SeeSwap</h1>
+			<h2>&copy;2020</h2>
+		</div>
+	</wrap>
+</footer>
+
+<script type="module" src="scripts/seeswap.js"></script>
+<script src="scripts/finchart.js"></script>
+<script src="scripts/main-swap.js"></script>
+</body>
+</html>

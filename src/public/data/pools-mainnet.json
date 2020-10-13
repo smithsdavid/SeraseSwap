@@ -1,0 +1,155 @@
+{
+	"updated": 1602362828282,
+	"pools":{
+		"0xc156f4a70c3f3fc0150e018e5fd424e590e24980":{
+			"active": true,
+			"address": "0xc156f4a70c3f3fc0150e018e5fd424e590e24980",
+			"name": "ONEs/USDs",
+    		"base":  "ONEs", 
+    		"quote": "USDs", 
+			"mktcap": 0.0,
+			"volume24": 0.0,
+			"swapfee": 0.005,
+			"tokens":{
+				"ONEs":{
+					"address":"0xB2f2C1D77113042f5ee9202d48F6d15FB99efb63",
+					"symbol":"ONEs",
+					"name": "ONE Synth",
+					"icon":"assets/ones.png",
+					"weight": 0.5,
+					"price": 0.0,
+					"balance": 0.0
+				},
+				"USDs":{
+					"address":"0x06F034131F6d24A07b3dE3F3cCCC34Ca1fA9C064",
+					"symbol":"USDs",
+					"name": "USD Synth",
+					"icon":"assets/usds.png",
+					"weight": 0.5,
+					"price": 0.0,
+					"balance": 0.0
+				}
+			}
+		},
+		"0xc7a55ce3182fe700535d1c37624b80313e4ed3ff":{
+			"active": true,
+			"address": "0xc7a55ce3182fe700535d1c37624b80313e4ed3ff",
+			"name": "SEE/ONEs",
+    		"base":  "SEE", 
+    		"quote": "ONEs", 
+			"mktcap": 0.0,
+			"volume24": 0.0,
+			"swapfee": 0.005,
+			"tokens":{
+				"SEE":{
+					"address":"0x7fA202fdb3B0eCB975119cc3A895BFB3104aDA68",
+					"symbol":"SEE",
+					"name": "SEE Token",
+					"icon":"assets/see.png",
+					"weight": 0.5,
+					"price": 0.0,
+					"balance": 0.0
+				},
+				"ONEs":{
+					"address":"0xB2f2C1D77113042f5ee9202d48F6d15FB99efb63",
+					"symbol":"ONEs",
+					"name": "ONE Synth",
+					"icon":"assets/ones.png",
+					"weight": 0.5,
+					"price": 0.0,
+					"balance": 0.0
+				}
+			}
+		},
+		"0xec5fff2adb40a78be2969caae0f0bb45da2adaed":{
+			"active": true,
+			"address": "0xec5fff2adb40a78be2969caae0f0bb45da2adaed",
+			"name": "ARANK/ONEs",
+    		"base":  "ARANK", 
+    		"quote": "ONEs", 
+			"mktcap": 0.0,
+			"volume24": 0.0,
+			"swapfee": 0.005,
+			"tokens":{
+				"ARANK":{
+					"address":"0xBD16b0B2eB520b7Ff4A4156d367Ee359Ac19c531",
+					"symbol":"ARANK",
+					"name": "ARANK Token",
+					"icon":"assets/arank.png",
+					"weight": 0.5,
+					"price": 0.0,
+					"balance": 0.0
+				},
+				"ONEs":{
+					"address":"0xB2f2C1D77113042f5ee9202d48F6d15FB99efb63",
+					"symbol":"ONEs",
+					"name": "ONE Synth",
+					"icon":"assets/ones.png",
+					"weight": 0.5,
+					"price": 0.0,
+					"balance": 0.0
+				}
+			}
+		},
+		"0x5c5ce2b57c8a1c000c1bfd306ce39ff255b21dc3":{
+			"active": true,
+			"address": "0x5c5ce2b57c8a1c000c1bfd306ce39ff255b21dc3",
+			"name": "EUSK/ONEs",
+    		"base":  "EUSK", 
+    		"quote": "ONEs", 
+			"mktcap": 0.0,
+			"volume24": 0.0,
+			"swapfee": 0.005,
+			"tokens":{
+				"EUSK":{
+					"address":"0x85a1DD919cd605aa2EAD4b01ff1190504BcAb609",
+					"symbol":"EUSK",
+					"name": "EUSK Token",
+					"icon":"assets/eusk.png",
+					"weight": 0.5,
+					"price": 0.0,
+					"balance": 0.0
+				},
+				"ONEs":{
+					"address":"0xB2f2C1D77113042f5ee9202d48F6d15FB99efb63",
+					"symbol":"ONEs",
+					"name": "ONE Synth",
+					"icon":"assets/ones.png",
+					"weight": 0.5,
+					"price": 0.0,
+					"balance": 0.0
+				}
+			}
+		},
+		"0x8faa4dd7577d0966aaa6cbb399c8d58c57cd9fe5":{
+			"active": false,
+			"address": "0x8faa4dd7577d0966aaa6cbb399c8d58c57cd9fe5",
+			"name": "SEED/ONEs",
+    		"base":  "SEED", 
+    		"quote": "ONEs", 
+			"mktcap": 0.0,
+			"volume24": 0.0,
+			"swapfee": 0.005,
+			"tokens":{
+				"SEED":{
+					"address":"0x793DAC3Ec4969A5BEE684BcF4290d52feB8F51b4",
+					"symbol":"SEED",
+					"name": "SEED Token",
+					"icon":"assets/seed.png",
+					"weight": 0.5,
+					"price": 0.0,
+					"balance": 0.0
+				},
+				"ONEs":{
+					"address":"0xB2f2C1D77113042f5ee9202d48F6d15FB99efb63",
+					"symbol":"ONEs",
+					"name": "ONE Synth",
+					"icon":"assets/ones.png",
+					"weight": 0.5,
+					"price": 0.0,
+					"balance": 0.0
+				}
+			}
+		}
+	}
+}

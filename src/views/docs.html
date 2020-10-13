@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>SeeSwap Docs</title>
+	<style>
+		html, body { margin: 0; padding: 0; font: 300 1em/1.6 sans-serif; color: #333; }
+		p b { font-weight: 600; }
+		a { color: #3884FF; }
+		main    { display: flex; flex-direction: row; width: 100%; }
+		section { display: flex; flex-direction: column; width: 75%; }
+		content { padding: 50px 90px; }
+		nav     { display: flex; flex-direction: column; width: 25%; height: 100%; background-color: #F5F7F9; }
+		nav li { margin: 2px 0px 2px 20px; padding: 10px 20px; list-style-type: none; font-size: 0.9em; font-weight: 400; }
+		nav li:hover { color: #3884FF; background-color: #E6ECF2; }
+		nav li.selected { background-color: #FFF; }
+		nav li a { display: block; color: #333; text-decoration: none; }
+		.nav-title { margin-left: 30px; font-size: 0.9em; line-height: 40px; }
+		.nav-icon  { width: 40px; height: 40px; margin-bottom: -14px; margin-right: 10px; }
+		.nav-sep   { margin: 20px 0; border: none; border-top: 1px solid #E3E6E9; }
+		.sep { margin: 50px 0; border: none; border-top: 1px solid #E3E6E9; }
+	</style>
+</head>
+<body>
+
+
+<main>
+	<nav>
+		<h3 class="nav-title"><img class="nav-icon" src="media/see.png">SeeSwap Documentation</h3>
+		<hr class="nav-sep">
+		<li class="selected"><a href="#">SeeSwap</a></li>
+		<li><a href="#">Basics</a></li>
+		<li><a href="#">Wrapper ONE to USDs</a></li>
+		<li><a href="#">Wrapper ONE to ONEs</a></li>
+		<li><a href="#">Development roadmap?</a></li>
+		<li><a href="#">Fork From Balancer</a></li>
+		<li><a href="#">SeeSwap Fundamental Concepts</a></li>
+		<li><a href="#">Smart Order Router</a></li>
+		<li><a href="#">SeeSwap Pool Tokens</a></li>
+		<li><a href="#">SEE - SeeSwap Governance Token</a></li>
+		<li><a href="#">SEE Liquidity Mining</a></li>
+		<li><a href="#">Limitations</a></li>
+		<li><a href="#">Addresses</a></li>
+	</nav>
+	<section>
+		
+		<content id="intro">
+			<h1>SeeSwap</h1>
+			<hr class="sep">
+			<p><b>SeeSWAP</b> is an automated <b>portfolio manager</b>, <b>liquidity provider</b>, and <b>price sensor</b>.</p>
+			<p><b>SeeSwap</b> turns the concept of an index fund on its head: instead of a paying fees to portfolio managers to rebalance your portfolio, you collect fees from traders, who rebalance your portfolio by following arbitrage opportunities.</p>
+			<p><b>SeeSWAP</b> is a fork from <b>Balancer</b> that is based on an <a href="#">N-dimensional invariant surface</a> which is a generalization of the constant product formula described by Vitalik Buterin and proven viable by the popular Uniswap dapp.</p>
+		</content>
+
+		<content id="basics">
+			<h1>Basics</h1>
+			<hr class="sep">
+
+			<h3>What is the SeeSwap Protocol?</h3>
+			<p>SeeSwap is a protocol for multi-token automated marked-Making It enables portfolio owners to create SeeSwap Pools, and traders to trade against them. SeeSwap Pools contain two or more tokens, each with an independent weight representing its proportion of the total pool value. The pools provide the SeeSwap Protocol with liquidity, and charge traders a fee for access to it. Pools can be considered automated market-makers, since anyone can swap any two tokens, in any pool.</p>
+
+			<h3>How is the SeeSwap Protocol useful?</h3>
+			<p>There are two categories of users who can benefit from the SeeSwap Protocol: liquidity providers - who own SeeSwap Pools or participate in shared pools, and traders - who buy or sell the underlying pool assets on the open market.</p>
+			<p>Anyone with two or more Harmony HRC20 tokens can be a liquidity provider. For example:</p>
+			<ul>
+				<li>Portfolio managers, who want to have controlled exposure to different assets without complicated and expensive rebalancing </li>
+				<li>Investors who have HRC20 tokens sitting idly in a wallet, and would like to put them to work earning passive income from fees </li>
+			</ul>
+			<p>Traders can choose from a diverse set of pools, each presenting a unique set of investment opportunities and challenges through its particular configuration of tokens, weights, and fees. The interplay between these settings, pool volume, and external prices generates market forces which incentivize traders to maintain stable token ratios, thereby preserving asset value for liquidity providers.</p>
+			<p>There are three main categories:</p>
+			<ul>
+				<li>"Retail" traders seeking to exchange tokens with low slippage at favorable rates</li>
+				<li>Arbitrageurs seeking profit through leveling market inefficiencies between DEXs or CEXs </li>
+				<li>Ethereum smart contracts seeking liquidity for a variety of reasons, such as liquidating positions on other protocols, trading on behalf of users, etc. </li>
+			</ul>
+
+			<h3>Is SeeSwap Protocol fully permissionless?</h3>
+			<p>Yes. SeeSwap Pools cannot be censored or whitelisted. Traders cannot be censored or whitelisted. SeeSwap core team does not have the power to halt or edit the smart contracts in any way after they’ve been deployed. The contracts are not upgradeable, and there is no admin functionality or "backdoor" present in the code.</p>
+			<p>Of course, Balancer has no control over the contracts of HRC20 tokens placed in SeeSwap pools. If a centralized token (e.g., USDs) were to blacklist an address or freeze all transfers, that would affect all USDs tokens everywhere, including those in SeeSwap Pools.</p>
+
+			<h3>Does SeeSwap Protocol charge any fees at the protocol layer?</h3>
+			<p>Yes. There is a placeholder for anEXIT_FEE in the code, it is currently set to 0.5% </p>
+
+			<h2>SeeSwap Pools</h2>
+			<h3>What is a SeeSwap Pool?</h3>
+			<p>The fundamental building block of the SeeSwap Protocol is the SeeSwap Pool. Pools are smart contracts that implement the SeeSwap Protocol, and hold value in two or more HRC20 tokens.</p>
+			<p>You can think of a SeeSwap Pool as an automated, market-making portfolio. Each token asset has an independent weight, and can be traded against any other token in the pool. For example, you could have a pool with three tokens in the following proportions 50% BTCs, 25% ETHs and 25% DAIs.</p>
+			<p>The value proposition of SeeSwap flows from two main features:</p>
+			<ol>
+				<li>Even as the relative unit prices of the tokens vary, the pool as a whole is continuously rebalanced (in an efficient market) to maintain each token's proportion of the total value. </li>
+				<li>Each trade that takes place in a SeeSwap Pool generates a fee for the pool owner. The fee is a percentage of the trading volume, and is customizable by the pool owner when the pool is created.</li>
+			</ol>
+			<p>Thus the incentives of both participants are aligned. Liquidity providers earn trading fees, while the overall value of their portfolio is preserved through continuous rebalancing. Traders pay these fees for the opportunity to either swap tokens with low slippage, or profit from arbitrage opportunities between pools and the open market.</p>
+
+			<h3>Are there constraints for setting up a SeeSwap Pool?</h3>
+			<p>Only a few. SeeSwap Protocol limits pools in the following ways:</p>
+			<ul>
+				<li>Number of tokens: pools must contain at least two, and may contain up to eight tokens.</li>
+				<li>Swap fee: the fee must be between 0.0001% and 10% </li>
+				<li>HRC20 compliance: pool tokens must be HRC20 compliant. </li>
+			</ul>
+
+			<h3>How are SeeSwap Pools continuously rebalanced?</h3>
+			<p>We believe this is the main innovation introduced by the SeeSwap Protocol. Pools are efficiently rebalanced through a multi-dimensional invariant function used to continuously define swap prices between any two tokens in a pool. Essentially, it is an n-dimensional generalization of Uniswap's x * y = k formula.</p>
+			<p>Imagine a portfolio that contains a certain proportion of token A, and its external market price increases. In a conventional rebalancing process, the portfolio manager would need to take action - in this case, pay a trading fee to sell token A (and probably pay another fee to buy something else to replace it).</p>
+			<p>In contrast, SeeSwap Protocol lets rational market actors actively buy token A from the pool, presumably to sell elsewhere on the open market at a profit. The portfolio manager (SeeSwap Pool creator in this context) does nothing but collect the fees.</p>
+			<p>So instead of doing work and paying fees to rebalance their portfolio, SeeSwap Pool creators earn fees while traders do the rebalancing work for them. Conversely, traders benefit in two ways - high liquidity allows low slippage on "retail trades," and arbitrageurs can directly profit from swings in external market prices.</p>
+
+			<h3>How do SeeSwap Pools charge fees and how much are they?</h3>
+			<p>SeeSwap pools charge a percentage of the input amount traded for each trade. The fee goes entirely to the SeeSwap Pool liquidity providers.</p>
+
+			<h3>What types of SeeSwap pools are there?</h3>
+			<p>Core SeeSwap Pools can be controlled or finalized. Essentially, finalized pools are "public" - their parameters are fixed, and anyone can add/remove liquidity and swap tokens. Controlled pools are "private" - their parameters are not fixed, but only the pool creator can add liquidity. </p>
+			<p>There are also various kinds of Smart Pools - Core SeeSwap Pools controlled by a smart contract. SeeSwap is designed to be easily extensible; the Core Concepts page referenced above has some suggestions for Smart Pool designs.</p>
+
+			<h2>Using SeeSwap Protocol</h2>
+
+			<h3>How can I use SeeSwap as a trader?</h3>
+			<p>There are two ways a trader can interact with SeeSwap Protocol:</p>
+			<ul>
+				<li>Through our Exchange front-end: harmony.one</li>
+				<li>Directly through our smart contracts on Harmony Mainnet</li>
+			</ul>
+
+			<h3>How can I use SeeSwap as a liquidity provider?</h3>
+			<p>There are two main ways a liquidity provider or portfolio manager can interact with SeeSwap Protocol:</p>
+			<ul>
+				<li>Through our pools front-end https://seeswap.one/pools</li>
+				<li>Directly through our smart contracts on Harmony Mainnet</li>
+			</ul>
+
+			<h3>Can SeeSwap be used as an Index Fund?</h3>
+			<p>SeeSwap Protocol is ideal for Index Funds, as it takes away all the hassle that managers have regarding rebalancing - and on top of that generates fees from trading.</p>
+
+			<h2>Miscellaneous</h2>
+
+			<h3>Does using SeeSwap Protocol generate taxable events?</h3>
+			<p>We cannot provide tax or accounting advice. Tax regulations are specific to jurisdiction where you or your company reside. For any legal or tax matters we recommend consulting your own attorney.</p>
+
+			<h3>Are there risks in using SeeSwap Protocol?</h3>
+			<p>SeeSwap Protocol smart contracts is a fork from Balancer that have been designed with security as a top priority.</p>
+			<p>SeeSwap Pools are upgradeable initially before going compleely decentrelized.</p>
+			<p>Remember that the tokens held in SeeSwap Pools are also smart contracts - not controlled by SeeSwap - and may have their own risks. SeeSwap does not support non-HRC20-conforming tokens, but pools may have been created that use them anyway.</p>
+			<p>The CRP contains safeguards to prevent categories of tokens with known issues from being used in pools (e.g., non HRC20-conforming tokens, and tokens that disallow zero-transfers), and further safeguards to allow other kinds of tokens to interact safely with the protocol (e.g., tokens with callbacks, or those which require 0 prior spend approval).</p>
+			<p>Since Smart Pool operators can, by definition, alter the parameters of the pool during active trading, all require some level of trust in the pool creators (beyond the general smart contract risk) - the more parameters they can change, the more trust is required.</p>
+			<p><b>As a liquidity provider, there is also the financial risk of Impermanent Loss.</b></p>
+
+		</content>
+	</section>
+</main>
+
+
+</body>
+</html>

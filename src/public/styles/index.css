@@ -1,0 +1,31 @@
+/* SEESWAP */
+
+#main { text-align: center; }
+#main p { font-size: 1.2em; font-weight: 200; color: var(--font-secondary); }
+
+#hero    { width: 800px; margin-top: 50px; }
+.actions { margin-top: 50px; }  
+.action  { display: inline-block; width: 220px; margin: 0 20px; padding: 8px 20px; font-size: 1.5em; line-height: 32px; border-radius: 32px; border: 2px solid #FFF; background-color: var(--back-secondary); color: #EEE; cursor: pointer; }  
+.swap    { background-color: #369; border-color: #58B;}
+.pool    { background-color: #262; border-color: #484;}
+.swap:hover    { border-color: #5AB; color: #FFF; }
+.pool:hover    { border-color: #4A4; color: #FFF; }
+
+#intro { width: 800px; margin: 150px auto; }
+#info  { width: 800px; margin: 150px auto; }
+#final { width: 800px; margin: 150px auto; }
+.title { font-size: 3em; font-weight: 200; }
+
+
+/* RESPONSIVE */
+
+@media screen and (max-width: 720px) { /* iPhone 6S+ */
+	#hero { width: 90%; }
+	.action  { display: block; width: 50%; margin: 20px auto; }  
+	#intro { width: 90%; margin: 100px auto; }
+	#info  { width: 90%; margin: 100px auto; }
+	#final { width: 90%; margin: 100px auto; }
+}
+
+
+/* END 
