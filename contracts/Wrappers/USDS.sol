@@ -59,9 +59,12 @@ contract USDS {
     function unwrap(uint256 value) public {
         require(value > 0, "ERR_INVALID_AMOUNT");
         require(value <= balanceOf[msg.sender], "ERR_NO_BALANCE");
-        uint256 fee    = value.mul(_unwrapfee).div(10000);
-        uint256 amount = value.sub(fee);
-        uint256 total  = amount.mul(UNIT).div(_price);
+        uint256 fee     = value.mul(_unwrapfee).div(10000);
+        uint256 amount  = value.sub(fee);
+        uint256 total   = amount.mul(UNIT).div(_price);
+        address self    = address(this);
+        uint256 balance = self.balance;
+        require(total <= balance, "ERR_NO_BALANCE");
         _totalSupply   = _totalSupply.sub(amount);  // burn
         balanceOf[_collector] += fee;
         balanceOf[msg.sender] -= value;
@@ -107,7 +110,7 @@ contract USDS {
     }
 
     function setCollector(address payable any) external {
-        require(msg.sender == _controller, "ERR_NOT_CONTROLLER");
+        require(msg.sender == _controller, "ERR_NO_CONTROLLER");
         emit Log_Collector(msg.sender, any);
         _collector = any;
     }
@@ -117,7 +120,7 @@ contract USDS {
     }
 
     function setController(address any) external {
-        require(msg.sender == _controller, "ERR_NOT_CONTROLLER");
+        require(msg.sender == _controller, "ERR_NO_CONTROLLER");
         _controller = any;
         emit Log_Controller(msg.sender, any);
     }
@@ -127,7 +130,7 @@ contract USDS {
     }
 
     function setWrapFee(uint256 fee) external {
-        require(msg.sender == _controller, "ERR_NOT_CONTROLLER");
+        require(msg.sender == _controller, "ERR_NO_CONTROLLER");
         require(fee >= 0, "ERR_INVALID_FEE");
         emit Log_WrapFee(msg.sender, _wrapfee, fee);
         _wrapfee = fee;
@@ -138,7 +141,7 @@ contract USDS {
     }
 
     function setUnwrapFee(uint256 fee) external {
-        require(msg.sender == _controller, "ERR_NOT_CONTROLLER");
+        require(msg.sender == _controller, "ERR_NO_CONTROLLER");
         require(fee >= 0, "ERR_INVALID_FEE");
         emit Log_UnwrapFee(msg.sender, _unwrapfee, fee);
         _unwrapfee = fee;
@@ -149,7 +152,7 @@ contract USDS {
     }
 
     function setPrice(uint256 newPrice) public {
-        require(msg.sender == _controller, "ERR_NOT_CONTROLLER");
+        require(msg.sender == _controller, "ERR_NO_CONTROLLER");
         require(newPrice > 0, "ERR_INVALID_PRICE");
         uint256 oldPrice = _price;
         _price = newPrice;
