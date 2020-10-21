@@ -2,7 +2,8 @@
 ## Portfolio balancer and assets exchange
 ### Version 1.0
 
-[https://seeswap.one](https://seeswap.one)
+**MAINNET** [https://seeswap.one](https://seeswap.one)
+**TESTNET** [https://test.seeswap.one](https://test.seeswap.one)
 
 ![Screenshot1](media/seeswap.jpg)
 
