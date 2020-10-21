@@ -1,5 +1,6 @@
 # SeeSwap
 ## Portfolio balancer and assets exchange
+### Version 1.0
 
 [https://seeswap.one](https://seeswap.one)
 
