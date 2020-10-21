@@ -60,3 +60,7 @@ That's it! Swapping Harmony tokens in less than ten seconds and less than one ce
 • EUSK  0x7320e4105f6D189045db506EA266B3261C88663B
 • SEED  0x2E14dC3EF14716c6ec3AF4Bb2D69171254368871
 ```
+
+## Bugs and Feedback
+
+Please report any bugs to https://github.com/kuyawa/seeswap/issues
