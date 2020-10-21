@@ -25,12 +25,16 @@
 			</div>
 		</div>
 		<div id="topright">
+			<div id="network">
+				<h3 id="netlabel">MAINNET</h3>
+			</div>
 			<div id="buttons">
 				<button id="swap-theme" onclick="swapMode()"><img id="theme-icon" src="media/daynight.png" title="Dark mode"></button>
 				<button id="connect" onclick="onWallet()">Connect Wallet</button>
 			</div>
-			<div id="network">
-				<h3 id="netlabel">MAINNET</h3>
+			<div id="balance">
+				<h3 id="user-address">Address: not connected</h3>
+				<h3 id="user-balance">Balance 0.0000</h3>
 			</div>
 		</div>
 	</wrap>
@@ -108,25 +112,56 @@
 			</div>
 
 			<div id="entry-form">
-				<h1>Pool Stakes</h1>
-				<div id="entry-amount" class="entry-panel">
-					<label class="op-title"><img id="base-asset-icon" src="assets/ones.png"> <span id="base-asset-symbol">ONEs</span></label>
-					<input type="text" id="base-asset-qty" placeholder="base amount">
-					<input type="text" id="base-asset-price" disabled="disabled" value="1.00">
+				<div id="pool-tabs">
+					<button id="pool-tab1" class="pool-tab pool-sel" onclick="poolTabSel(1)">Stake</button>
+					<button id="pool-tab2" class="pool-tab" onclick="poolTabSel(2)">Info</button>
 				</div>
-				<div id="entry-buy" class="entry-panel">
-					<label class="op-title"><img id="quote-asset-icon" src="assets/usds.png"> <span id="quote-asset-symbol">USDs</span></label>
-					<input type="text" id="quote-asset-qty" placeholder="quote amount">
-					<input type="text" id="quote-asset-price" disabled="disabled" value="1.00">
+				<div id="pool-stake" class="pool-panel selected">
+					<h1>Pool Stake</h1>
+					<label id="base-asset-price">ONEs/USDs 0.00000000</label>
+					<div id="entry-base" class="entry-panel">
+						<label class="op-title"><img id="base-asset-icon" src="assets/ones.png"> <span id="base-asset-symbol">ONEs</span></label>
+						<input type="text" id="base-asset-qty" placeholder="base amount">
+						<label id="base-asset-myliquidity" class="info" onclick="setMaxAmount()">My liquidity: 0.00000000</label>
+					</div>
+					<div id="entry-quote" class="entry-panel">
+						<label class="op-title"><img id="quote-asset-icon" src="assets/usds.png"> <span id="quote-asset-symbol">USDs</span></label>
+						<input type="text" id="quote-asset-qty" placeholder="quote amount">
+						<label id="quote-asset-myliquidity" class="info" onclick="setMaxAmount()">My liquidity: 0.00000000</label>
+					</div>
+					<button id="join-pool" onclick="onPoolJoin()" disabled>JOIN POOL</button>
+					<button id="exit-pool" onclick="onPoolExit()" disabled>EXIT POOL</button>
+					<div id="signtxs" class="normal">
+						<span id="signmsg"></span>
+					</div>
+					<div id="status" class="normal">
+						<img id="spinner" width="12px" height="12px" src="media/spinner.gif"/>
+						<span id="message"></span>
+					</div>
 				</div>
-				<button id="join-pool" onclick="onPoolJoin()" disabled>JOIN POOL</button>
-				<button id="exit-pool" onclick="onPoolExit()" disabled>EXIT POOL</button>
-				<div id="signtxs" class="normal">
-					<span id="signmsg"></span>
-				</div>
-				<div id="status" class="normal">
-					<img id="spinner" width="12px" height="12px" src="media/spinner.gif"/>
-					<span id="message"></span>
+				<div id="pool-info" class="pool-panel">
+					<h1>Pool Info</h1>
+					<div class="entry-panel">
+						<label class="pool-title" id="pool-name">ONEs/USDs</label>
+						<label class="pool-label">Current Price</label><label class="pool-data" id="pool-rate">0.00541234</label>
+						<label class="pool-label">Pool Share</label><label class="pool-data" id="pool-share">100.00000000</label>
+						<label class="pool-label">My Share</label><label class="pool-data" id="pool-myshare">25.00000000</label>
+						<label class="pool-label">Percent</label><label class="pool-data" id="pool-percent">25.00%</label>
+					</div>
+					<div class="entry-panel">
+						<label class="pool-title" id="pool-base-name">ONEs</label>
+						<label class="pool-label">Pool Balance</label><label class="pool-data" id="pool-base-balance">0.00000000</label>
+						<label class="pool-label">My Liquidity</label><label class="pool-data" id="pool-base-myliquidity">0.00000000</label>
+						<label class="pool-label">My Balance</label><label class="pool-data" id="pool-base-mybalance">0.00000000</label>
+					</div>
+					<div class="entry-panel">
+						<label class="pool-title" id="pool-quote-name">USDs</label>
+						<label class="pool-label">Pool Balance</label><label class="pool-data" id="pool-quote-balance">0.00000000</label>
+						<label class="pool-label">My Liquidity</label><label class="pool-data" id="pool-quote-myliquidity">0.00000000</label>
+						<label class="pool-label">My Balance</label><label class="pool-data" id="pool-quote-mybalance">0.00000000</label>
+					</div>
+					<div class="entry-panel">
+					</div>
 				</div>
 			</div>
 
@@ -150,34 +185,66 @@
 	<wrap>
 		<div id="wrap-form">
 			<div id="wrap-tabs">
-				<button id="wrap-tab1" class="wrap-tab wrap-sel" onclick="wrapTabSel(1)">ONE/ONEs</button>
-				<button id="wrap-tab2" class="wrap-tab" onclick="wrapTabSel(2)">ONE/USDs</button>
+				<button id="wrap-tab1" class="wrap-tab wrap-sel" onclick="onWrapTabSel(1)">ONE/ONEs</button>
+				<button id="wrap-tab2" class="wrap-tab" onclick="onWrapTabSel(2)">ONE/USDs</button>
 			</div>
-			<div id="usds-form">
-				<h1>Need <span id="wrap-token">ONEs</span> tokens?</h1>
-				<div id="wrap-price" class="wrap-panel">
-					<label><span id="wrap-price-label">ONE/ONEs</span> PRICE</label>
-					<input type="text" id="wrap-price-value" disabled="disabled" value="1.00000000">
+			<div id="ones-form" class="wrap-tab-panel selected">
+				<h1>Need ONEs tokens?</h1>
+				<div id="wrap-ones-price" class="wrap-panel">
+					<label><span id="wrap-ones-price-label">ONE/ONEs</span> PRICE</label>
+					<input type="text" id="wrap-ones-price-value" disabled="disabled" value="1.00000000">
 				</div>
-				<div id="wrap-sell" class="wrap-panel">
-					<label class="op-title"><img id="wrap-sell-icon" src="assets/one.png"> <span id="wrap-sell-symbol">ONE</span> <b class="red">SELL</b></label>
-					<input type="text" id="wrap-sell-qty" autocomplete="off" placeholder="amount to sell">
+				<div id="wrap-ones-sell" class="wrap-panel">
+					<label class="op-title"><img id="wrap-ones-sell-icon" src="assets/one.png"> <span id="wrap-ones-sell-symbol">ONE</span> <b class="red">SELL</b></label>
+					<input type="text" id="wrap-ones-sell-qty" autocomplete="off" placeholder="amount to sell">
+					<label id="wrap-ones-sell-liquidity" class="info">Liquidity: 0.00000000</label>
+					<label id="wrap-ones-sell-mybalance" class="info" onclick="wrapOnesSellMaxAmount()">My balance: 0.00000000</label>
 				</div>
-				<div id="wrap-switch"><img src="media/switch.png" onclick="onWrapSwitch()"></div>
-				<div id="wrap-buy" class="wrap-panel">
-					<label class="op-title"><img id="wrap-buy-icon" src="assets/ones.png"> <span id="wrap-buy-symbol">ONEs</span> <b class="grn">BUY</b></label>
-					<input type="text" id="wrap-buy-qty" autocomplete="off" placeholder="amount to buy">
+				<div id="wrap-ones-switch"><img src="media/switch.png" onclick="onWrapOnesSwitch()"></div>
+				<div id="wrap-ones-buy" class="wrap-panel">
+					<label class="op-title"><img id="wrap-ones-buy-icon" src="assets/ones.png"> <span id="wrap-ones-buy-symbol">ONEs</span> <b class="grn">BUY</b></label>
+					<input type="text" id="wrap-ones-buy-qty" autocomplete="off" placeholder="amount to buy">
+					<label id="wrap-ones-buy-liquidity" class="info">Liquidity: 0.00000000</label>
+					<label id="wrap-ones-buy-mybalance" class="info" onclick="wrapOnesBuyMaxAmount()">My balance: 0.00000000</label>
 				</div>
-				<button id="wrap-swap" onclick="onWrapExecute()" disabled>WRAP</button>
-				<div id="wrap-txs" class="normal">
-					<span id="wrap-msg"></span>
+				<button id="wrap-ones-swap" onclick="onWrapOnesExecute()">WRAP</button>
+				<div id="wrap-ones-txs" class="normal">
+					<span id="wrap-ones-msg"></span>
 				</div>
-				<div id="wrap-status" class="normal">
-					<img id="wrap-spinner" width="12px" height="12px" src="media/spinner.gif"/>
-					<span id="wrap-message">1% fee charged on every transaction</span>
+				<div id="wrap-ones-status" class="normal">
+					<img id="wrap-ones-spinner" width="12px" height="12px" src="media/spinner.gif"/>
+					<span id="wrap-ones-message">1% fee charged on every transaction</span>
 				</div>
 			</div>
-		</div>	
+			<div id="usds-form" class="wrap-tab-panel">
+				<h1>Need USDs tokens?</h1>
+				<div id="wrap-usds-price" class="wrap-panel">
+					<label><span id="wrap-usds-price-label">ONE/USDs</span> PRICE</label>
+					<input type="text" id="wrap-usds-price-value" disabled="disabled" value="1.00000000">
+				</div>
+				<div id="wrap-usds-sell" class="wrap-panel">
+					<label class="op-title"><img id="wrap-usds-sell-icon" src="assets/one.png"> <span id="wrap-usds-sell-symbol">ONE</span> <b class="red">SELL</b></label>
+					<input type="text" id="wrap-usds-sell-qty" autocomplete="off" placeholder="amount to sell">
+					<label id="wrap-usds-sell-liquidity" class="info">Liquidity: 0.00000000</label>
+					<label id="wrap-usds-sell-mybalance" class="info" onclick="wrapUsdsSellMaxAmount()">My balance: 0.00000000</label>
+				</div>
+				<div id="wrap-usds-switch"><img src="media/switch.png" onclick="onWrapUsdsSwitch()"></div>
+				<div id="wrap-usds-buy" class="wrap-panel">
+					<label class="op-title"><img id="wrap-usds-buy-icon" src="assets/usds.png"> <span id="wrap-usds-buy-symbol">USDs</span> <b class="grn">BUY</b></label>
+					<input type="text" id="wrap-usds-buy-qty" autocomplete="off" placeholder="amount to buy">
+					<label id="wrap-usds-buy-liquidity" class="info">Liquidity: 0.00000000</label>
+					<label id="wrap-usds-buy-mybalance" class="info" onclick="wrapUsdsBuyMaxAmount()">My balance: 0.00000000</label>
+				</div>
+				<button id="wrap-usds-swap" onclick="onWrapUsdsExecute()" disabled>WRAP</button>
+				<div id="wrap-usds-txs" class="normal">
+					<span id="wrap-usds-msg"></span>
+				</div>
+				<div id="wrap-usds-status" class="normal">
+					<img id="wrap-usds-spinner" width="12px" height="12px" src="media/spinner.gif"/>
+					<span id="wrap-usds-message">1% fee charged on every transaction</span>
+				</div>
+			</div>
+		</div>
 		<div id="wrap-info">
 			<p><img class="wrap-media" src="media/see.png" width="64"> You will need ONEs or USDs tokens to use SeeSwap portfolio balancer. These tokens can be exchanged for any asset available in the Harmony network and are also used for pool staking and earning dividends.</p>
 			<p><img class="wrap-media" src="media/wallet.png" width="64"> Buy ONEs or USDs tokens with your Harmony wallet and swap them with other assets in the network. You can join pools and earn dividends, and you can always sell them back for ONE at any time.</p>
@@ -196,7 +263,7 @@
 		<div id="token-address">
 			<h3>Token contract addresses on MAINNET</h3>
 			<pre>ONEs  0xB2f2C1D77113042f5ee9202d48F6d15FB99efb63</pre>
-			<pre>USDs  0x06F034131F6d24A07b3dE3F3cCCC34Ca1fA9C064</pre>
+			<pre>USDs  0xFCE523163e2eE1F5f0828eCe554E9D839bEA17F5</pre>
 			<pre>SEE   0x7fA202fdb3B0eCB975119cc3A895BFB3104aDA68</pre>
 			<pre>ARANK 0xBD16b0B2eB520b7Ff4A4156d367Ee359Ac19c531</pre>
 			<pre>EUSK  0x85a1DD919cd605aa2EAD4b01ff1190504BcAb609</pre>

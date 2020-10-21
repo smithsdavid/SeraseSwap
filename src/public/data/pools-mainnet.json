@@ -1,36 +1,6 @@
 {
 	"updated": 1602362828282,
 	"pools":{
-		"0xc156f4a70c3f3fc0150e018e5fd424e590e24980":{
-			"active": true,
-			"address": "0xc156f4a70c3f3fc0150e018e5fd424e590e24980",
-			"name": "ONEs/USDs",
-    		"base":  "ONEs", 
-    		"quote": "USDs", 
-			"mktcap": 0.0,
-			"volume24": 0.0,
-			"swapfee": 0.005,
-			"tokens":{
-				"ONEs":{
-					"address":"0xB2f2C1D77113042f5ee9202d48F6d15FB99efb63",
-					"symbol":"ONEs",
-					"name": "ONE Synth",
-					"icon":"assets/ones.png",
-					"weight": 0.5,
-					"price": 0.0,
-					"balance": 0.0
-				},
-				"USDs":{
-					"address":"0x06F034131F6d24A07b3dE3F3cCCC34Ca1fA9C064",
-					"symbol":"USDs",
-					"name": "USD Synth",
-					"icon":"assets/usds.png",
-					"weight": 0.5,
-					"price": 0.0,
-					"balance": 0.0
-				}
-			}
-		},
 		"0xc7a55ce3182fe700535d1c37624b80313e4ed3ff":{
 			"active": true,
 			"address": "0xc7a55ce3182fe700535d1c37624b80313e4ed3ff",

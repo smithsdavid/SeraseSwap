@@ -1,41 +1,61 @@
 // SEESWAP SWAP
 
 var session = {
-	network   : 1, // 0.testnet 1.mainnet
+	network   : 0, // 0.testnet 1.mainnet
 	wallet    : null,
     address   : null,
 	connected : false,
-    market    : 'BTCs/USDs',
-    base      : 'BTCs',
+    market    : 'ONEs/USDs',
+    base      : 'ONEs',
     quote     : 'USDs',
     onePrice  : 0.01,
     btcPrice  : 10000.00,
 };
 
 var swap = {
-	pool    : '',
-	sell    : 'BTC',
-	buy     : 'USDs',
-	price   : '1.00',
-	amount  : '1',
-	fee     : '0.005',
-	slippage: '0.5'
+	pool     : '',
+	sell     : 'ONEs',
+	buy      : 'USDs',
+	price    : '1.00',
+	amount   : '1',
+	fee      : '0.005',
+	slippage : '0.5',
+	myBalSell: '0',
+	myBalBuy : '0'
 };
 
-var wrap = {
-	wrapper : 1,
-	sell    : 'ONE',
-	buy     : 'ONEs',
-	price   : 1.00,
-	amount  : 0.00,
-	wfee    : 0.01,
-	ufee    : 0.01
+var wrapOnes = {
+	wrapper  : 1,
+	sell     : 'ONE',
+	buy      : 'ONEs',
+	price    : 1.00,
+	amount   : 0.00,
+	wfee     : 0.01,
+	ufee     : 0.01,
+	oneBal   : 0.00,
+	onesBal  : 0.00,
+	myOneBal : 0.00,
+	myOnesBal: 0.00
+};
+
+var wrapUsds = {
+	wrapper  : 1,
+	sell     : 'ONE',
+	buy      : 'USDs',
+	price    : 1.00,
+	amount   : 0.00,
+	wfee     : 0.01,
+	ufee     : 0.01,
+	oneBal   : 0.00,
+	usdsBal  : 0.00,
+	myOneBal : 0.00,
+	myUsdsBal: 0.00
 };
 
 var chartInfo = {
     market  : '',
     data    : null,
-    candles : {'BTC':[]},
+    candles : {'ONE':[]},
     ticks   : [300000, 900000, 3600000, 86400000, 604800000],  // 5m 15m 1h 1d 1w 
 	symbol  : 'ONE',
     period  : 2  // 1h
@@ -53,12 +73,11 @@ var _config = {
 		markets: {'ONEs/USDs':'ONE/USDT','SEE/ONEs':'','ARANK/ONEs':'','EUSK/ONEs':'','SEED/ONEs':''},
 		symbols: {'ONE':'ONE','ONEs':'ONE','USDs':'','SEE':'','ARANK':'','EUSK':'','SEED':''},
 		icons  : {'ONE':'one','ONEs':'ones','USDs':'usds','SEE':'see','ARANK':'arank','EUSK':'eusk','SEED':'seed'},
-		USDSActive : false,
-		USDSWrapper: '',
-		USDSAddress: '',
+		USDSActive : true,
+		USDSWrapper: '0xed8E8980d287B07C114afCaCcD871489A2604f5e',
 		ONESActive : true,
 		ONESWrapper: '0xFD2117D4Ba367275e0b8186F8d98Aac96cCE9700',
-		initicker: 'ONE',
+		initicker: 'ONE'
 	},
 	mainnet: {
 		network: 'https://api.s0.t.hmny.io/',
@@ -66,12 +85,11 @@ var _config = {
 		markets: {'ONEs/USDs':'ONE/USDT','SEE/ONEs':'','ARANK/ONEs':'','EUSK/ONEs':'','SEED/ONEs':''},
 		symbols: {'ONE':'ONE','ONEs':'ONE','USDs':'','SEE':'','ARANK':'','EUSK':'','SEED':''},
 		icons  : {'ONE':'one','ONEs':'ones','USDs':'usds','SEE':'see','ARANK':'arank','EUSK':'eusk','SEED':'seed'},
-		USDSActive : false,
-		USDSWrapper: '',
-		USDSAddress: '',
+		USDSActive : true,
+		USDSWrapper: '0xFCE523163e2eE1F5f0828eCe554E9D839bEA17F5',
 		ONESActive : true,
 		ONESWrapper: '0xB2f2C1D77113042f5ee9202d48F6d15FB99efb63',
-		initicker: 'ONE',
+		initicker: 'ONE'
 	}
 }
 
@@ -86,7 +104,7 @@ function getIconName(sym) {
 	return 'assets/'+(config.icons[sym]||'noicon')+'.png'; 
 }
 
-function money(n,d=2) { 
+function money(n, d=2) { 
 	return Number(n).toLocaleString(undefined, {minimumFractionDigits:d, maximumFractionDigits:d}); 
 }
 
@@ -150,6 +168,7 @@ async function connectWallet() {
 		session.connected = true;
         session.address = account.address;
 		connectState(2); // connected
+		showBalance(session.address);
 	}
 	return true;
 }
@@ -209,6 +228,32 @@ function showMarketInfo(symbol, info) {
 	$("price-low").innerHTML    = money(info.lowPrice, decs);
 	$("price-close").innerHTML  = money(info.prevClosePrice, decs);
 	$("price-spread").innerHTML = money(spread, 4)+'%';
+}
+
+async function showBalance(address) {
+	if(!address){ return; }
+	let res = await seeswap.harmony.blockchain.getBalance({ address: address });
+	console.log('Balance', res);
+	if(res){
+        $('user-address').innerHTML = 'Address: ' + session.address.substr(0,8);
+		$('user-balance').innerHTML = 'Balance: ' + money(parseInt(res.result, 16) / 10**18, 2);
+	}
+}
+
+async function showMyBalances() {
+	if(!session.address || !swap.pool){ return; }
+	let pool = pools[swap.pool];
+	let tokenA = pool.tokens[swap.sell].address;
+	let tokenB = pool.tokens[swap.buy].address;
+	let res1 = await seeswap.checkBalance(session.address, tokenA);
+	let res2 = await seeswap.checkBalance(session.address, tokenB);
+	console.log('My Balances', res1, res2);
+	swap.myBalSell = res1;
+	swap.myBalBuy  = res2;
+	if(res1){
+		$('sell-asset-mybalance').innerHTML = 'My balance: ' + money(res1, 8);
+		$('buy-asset-mybalance').innerHTML  = 'My balance: ' + money(res2, 8);
+	}
 }
 
 
@@ -406,7 +451,7 @@ async function selectPool(poolId) {
     	$('pool-price-value').value = swap.price;
 		updatePoolInfo(poolId, info);  // table.row for poolid
 	}
-	//swap.price = await getPoolPrice(pool, swap.sell, swap.buy);
+	await showMyBalances();
 	calcBuy();
 }
 
@@ -498,20 +543,40 @@ function calcBuy() {
 	$('buy-asset-qty').value = money(buyAmount, 8);
 }
 
-function calcWrapSell() {
-	let amount = validNumber($('wrap-buy-qty').value);
-	console.log('Sell', amount)
-	let sellAmount = amount / wrap.price;
-	wrap.amount = sellAmount;
-	$('wrap-sell-qty').value = money(sellAmount, 8);
+function calcWrapOnesSell() {
+	let amount = validNumber($('wrap-ones-buy-qty').value);
+	if(amount==0){ $('wrap-ones-sell-qty').value = 0; return; }
+	console.log('Ones Sell', amount)
+	let sellAmount = amount / wrapOnes.price;
+	wrapOnes.amount = sellAmount;
+	$('wrap-ones-sell-qty').value = money(sellAmount, 8);
 }
 
-function calcWrapBuy() {
-	let amount = validNumber($('wrap-sell-qty').value);
-	console.log('Buy', amount)
-	wrap.amount = amount;
-	let buyAmount = amount * wrap.price;
-	$('wrap-buy-qty').value = money(buyAmount, 8);
+function calcWrapOnesBuy() {
+	let amount = validNumber($('wrap-ones-sell-qty').value);
+	if(amount==0){ $('wrap-ones-buy-qty').value = 0; return; }
+	console.log('Ones Buy', amount)
+	wrapOnes.amount = amount;
+	let buyAmount = amount * wrapOnes.price;
+	$('wrap-ones-buy-qty').value = money(buyAmount, 8);
+}
+
+function calcWrapUsdsSell() {
+	let amount = validNumber($('wrap-usds-buy-qty').value);
+	if(amount==0){ $('wrap-usds-sell-qty').value = 0; return; }
+	console.log('Usds Sell', amount)
+	let sellAmount = amount / wrapUsds.price;
+	wrapUsds.amount = sellAmount;
+	$('wrap-usds-sell-qty').value = money(sellAmount, 8);
+}
+
+function calcWrapUsdsBuy() {
+	let amount = validNumber($('wrap-usds-sell-qty').value);
+	if(amount==0){ $('wrap-usds-buy-qty').value = 0; return; }
+	console.log('Usds Buy', amount)
+	wrapUsds.amount = amount;
+	let buyAmount = amount * wrapUsds.price;
+	$('wrap-usds-buy-qty').value = money(buyAmount, 8);
 }
 
 
@@ -527,14 +592,24 @@ function disableSwap() {
 	$('entry-swap').enabled = false;
 }
 
-function enableWrap() {
-	$('wrap-swap').innerHTML = (wrap.sell=='ONE'?'WRAP':'UNWRAP');
-	$('wrap-swap').enabled = true;
+function enableWrapOnes() {
+	$('wrap-ones-swap').innerHTML = (wrapOnes.sell=='ONE'?'WRAP':'UNWRAP');
+	$('wrap-ones-swap').enabled = true;
 }
 
-function disableWrap() {
-	$('wrap-swap').innerHTML = 'WAIT';
-	$('wrap-swap').enabled = false;
+function disableWrapOnes() {
+	$('wrap-ones-swap').innerHTML = 'WAIT';
+	$('wrap-ones-swap').enabled = false;
+}
+
+function enableWrapUsds() {
+	$('wrap-usds-swap').innerHTML = (wrapUsds.sell=='ONE'?'WRAP':'UNWRAP');
+	$('wrap-usds-swap').enabled = true;
+}
+
+function disableWrapUsds() {
+	$('wrap-usds-swap').innerHTML = 'WAIT';
+	$('wrap-usds-swap').enabled = false;
 }
 
 
@@ -560,10 +635,10 @@ function clearStatus()  { showStatus('&nbsp;', 0); }
 function signTxs(txt)   { $('signmsg').innerHTML = txt||'&nbsp;'; }
 
 
-function showWrapStatus(txt, state=0, wait=false) {
-    let div = $('wrap-status');
-    let msg = $('wrap-message');
-    let spn = $('wrap-spinner');
+function showWrapOnesStatus(txt, state=0, wait=false) {
+    let div = $('wrap-ones-status');
+    let msg = $('wrap-ones-message');
+    let spn = $('wrap-ones-spinner');
     msg.innerHTML = txt;
     spn.style.display = (wait?'inline':'none');
     switch(state) {
@@ -573,35 +648,124 @@ function showWrapStatus(txt, state=0, wait=false) {
     }
 }
 
-function showWrapWait(msg)  { showWrapStatus(msg, 0, true); }
-function showWrapWarn(msg)  { showWrapStatus(msg, 1); }
-function showWrapError(msg) { showWrapStatus(msg, 2); }
-function clearWrapStatus()  { showWrapStatus('&nbsp;', 0); }
-function signWrapTxs(txt)   { $('wrap-msg').innerHTML = txt||'&nbsp;'; }
+function showWrapOnesWait(msg)  { showWrapOnesStatus(msg, 0, true); }
+function showWrapOnesWarn(msg)  { showWrapOnesStatus(msg, 1); }
+function showWrapOnesError(msg) { showWrapOnesStatus(msg, 2); }
+function clearWrapOnesStatus()  { showWrapOnesStatus('&nbsp;', 0); }
+function signWrapOnesTxs(txt)   { $('wrap-ones-msg').innerHTML = txt||'&nbsp;'; }
 
 
-// WRAPPER
+function showWrapUsdsStatus(txt, state=0, wait=false) {
+    let div = $('wrap-usds-status');
+    let msg = $('wrap-usds-message');
+    let spn = $('wrap-usds-spinner');
+    msg.innerHTML = txt;
+    spn.style.display = (wait?'inline':'none');
+    switch(state) {
+        case 0: div.className = 'normal'; break;
+        case 1: div.className = 'warn';   break;
+        case 2: div.className = 'error';  break;
+    }
+}
 
-function showWrapPrice(price, invert=false) {
+function showWrapUsdsWait(msg)  { showWrapUsdsStatus(msg, 0, true); }
+function showWrapUsdsWarn(msg)  { showWrapUsdsStatus(msg, 1); }
+function showWrapUsdsError(msg) { showWrapUsdsStatus(msg, 2); }
+function clearWrapUsdsStatus()  { showWrapUsdsStatus('&nbsp;', 0); }
+function signWrapUsdsTxs(txt)   { $('wrap-usds-msg').innerHTML = txt||'&nbsp;'; }
+
+
+// WRAPPERS
+
+function showWrapOnesPrice(price, invert=false) {
 	if(invert){ price = 1/price; }
-	$('wrap-price-value').value = money(price, 8);
+	$('wrap-ones-price-value').value = money(price, 8);
 }
 
-async function loadWrapPrice(sym='ONE') {
+function showWrapUsdsPrice(price, invert=false) {
+	if(invert){ price = 1/price; }
+	$('wrap-usds-price-value').value = money(price, 8);
+}
+
+async function loadWrapOnesPrice() {
 	var res, info;
-	if(sym=='USD'){
-		res  = await fetch('api/getprice', {method:'get'});
-		info = await res.json();
-		wrap.price = parseFloat(info.price);
-		$('wrap-swap').disabled = !config.USDSActive;
-	} else {
-		wrap.price = 1.0;
-		$('wrap-swap').disabled = !config.ONESActive;
-	}
-	showWrapPrice(wrap.price);
+	wrapOnes.price = 1.0;
+	$('wrap-ones-swap').disabled = !config.ONESActive;
+	showWrapOnesPrice(wrapOnes.price);
 }
 
-async function getWrapPrice(base, quote) {
+async function loadWrapUsdsPrice() {
+	var res, info;
+	res  = await fetch('api/getprice', {method:'get'});
+	info = await res.json();
+	wrapUsds.price = parseFloat(info.price);
+	$('wrap-usds-swap').disabled = !config.USDSActive;
+	showWrapUsdsPrice(wrapUsds.price);
+}
+
+async function loadWrapOnesBalance() {
+	console.log('Fetching ONEs balances...');
+	if(!session.address){ console.log('No session.address'); return; }
+	console.log('Address', session.address);
+	var res, info;
+    let oneBal    = await seeswap.getBalance(config.ONESWrapper);
+    let myOneBal  = await seeswap.getBalance(session.address);
+    let wctx      = seeswap.harmony.contracts.createContract(seeswap.OnesWrapper.abi, config.ONESWrapper);
+    let onesBal   = await wctx.methods.totalSupply().call(seeswap.gasCall);
+    let myOnesBal = await wctx.methods.balanceOf(session.address).call(seeswap.gasCall);
+	wrapOnes.oneBal    = oneBal;
+	wrapOnes.onesBal   = onesBal/10**18;
+	wrapOnes.myOneBal  = myOneBal;
+	wrapOnes.myOnesBal = myOnesBal/10**18;
+	console.log('ONE  liquidity:', wrapOnes.oneBal);
+	console.log('ONE  mybalance:', wrapOnes.myOneBal);
+	console.log('ONEs liquidity:', wrapOnes.onesBal);
+	console.log('ONEs mybalance:', wrapOnes.myOnesBal);
+	if(wrapOnes.sell=='ONE'){
+		$('wrap-ones-sell-liquidity').innerHTML = 'Liquidity: '  + money(wrapOnes.oneBal, 8);
+		$('wrap-ones-buy-liquidity').innerHTML  = 'Liquidity: '  + money(wrapOnes.onesBal, 8);
+		$('wrap-ones-sell-mybalance').innerHTML = 'My Balance: ' + money(wrapOnes.myOneBal, 8);
+		$('wrap-ones-buy-mybalance').innerHTML  = 'My Balance: ' + money(wrapOnes.myOnesBal, 8);
+	} else {
+		$('wrap-ones-sell-liquidity').innerHTML = 'Liquidity: '  + money(wrapOnes.onesBal, 8);
+		$('wrap-ones-buy-liquidity').innerHTML  = 'Liquidity: '  + money(wrapOnes.oneBal, 8);
+		$('wrap-ones-sell-mybalance').innerHTML = 'My Balance: ' + money(wrapOnes.myOnesBal, 8);
+		$('wrap-ones-buy-mybalance').innerHTML  = 'My Balance: ' + money(wrapOnes.myOneBal, 8);
+	}
+}
+
+async function loadWrapUsdsBalance() {
+	console.log('Fetching USDs balances...');
+	if(!session.address){ console.log('No session.address'); return; }
+	console.log('Address', session.address);
+	var res, info;
+    let oneBal    = await seeswap.getBalance(config.USDSWrapper);
+    let myOneBal  = await seeswap.getBalance(session.address);
+    let wctx      = seeswap.harmony.contracts.createContract(seeswap.UsdsWrapper.abi, config.USDSWrapper);
+    let usdsBal   = await wctx.methods.totalSupply().call(seeswap.gasCall);
+    let myUsdsBal = await wctx.methods.balanceOf(session.address).call(seeswap.gasCall);
+	wrapUsds.oneBal    = oneBal;
+	wrapUsds.usdsBal   = usdsBal/10**18;
+	wrapUsds.myOneBal  = myOneBal;
+	wrapUsds.myUsdsBal = myUsdsBal/10**18;
+	console.log('ONE  liquidity:', wrapUsds.oneBal);
+	console.log('ONE  mybalance:', wrapUsds.myOneBal);
+	console.log('USDs liquidity:', wrapUsds.usdsBal);
+	console.log('USDs mybalance:', wrapUsds.myUsdsBal);
+	if(wrapUsds.sell=='ONE'){
+		$('wrap-usds-sell-liquidity').innerHTML = 'Liquidity: '  + money(wrapUsds.oneBal, 8);
+		$('wrap-usds-buy-liquidity').innerHTML  = 'Liquidity: '  + money(wrapUsds.usdsBal, 8);
+		$('wrap-usds-sell-mybalance').innerHTML = 'My Balance: ' + money(wrapUsds.myOneBal, 8);
+		$('wrap-usds-buy-mybalance').innerHTML  = 'My Balance: ' + money(wrapUsds.myUsdsBal, 8);
+	} else {
+		$('wrap-usds-sell-liquidity').innerHTML = 'Liquidity: '  + money(wrapUsds.usdsBal, 8);
+		$('wrap-usds-buy-liquidity').innerHTML  = 'Liquidity: '  + money(wrapUsds.oneBal, 8);
+		$('wrap-usds-sell-mybalance').innerHTML = 'My Balance: ' + money(wrapUsds.myUsdsBal, 8);
+		$('wrap-usds-buy-mybalance').innerHTML  = 'My Balance: ' + money(wrapUsds.myOneBal, 8);
+	}
+}
+
+async function getWrapUsdsPrice(base, quote) {
 	let resp, info;
     try {
 	    resp = await fetch('api/getprice', {method:'get'});
@@ -609,157 +773,109 @@ async function getWrapPrice(base, quote) {
     } catch(ex) {
     	info = {error:'Error parsing data'};
     }
-    if(info.error){  console.log('Price error: info error'); showWrapError('Error fetching price'); return null; }
-    if(!info.price){ console.log('Price error: info price'); showWrapError('Error fetching price'); return null; }
+    if(info.error){  console.log('Price error: info error'); showWrapUsdsError('Error fetching price'); return null; }
+    if(!info.price){ console.log('Price error: info price'); showWrapUsdsError('Error fetching price'); return null; }
     let price = parseFloat(info.price);
     if (quote=='ONE') { price = 1/price; }
-    console.log('Wrap price', price);
+    console.log('Wrap Usds price', price);
     return price;
 }
 
-async function wrapTabSel(tab) {
-	if(tab==1){
-		$('wrap-tab1').classList.add('wrap-sel');
-		$('wrap-tab2').classList.remove('wrap-sel');
-		switchWraps(1);
-	} else {
-		$('wrap-tab1').classList.remove('wrap-sel');
-		$('wrap-tab2').classList.add('wrap-sel');
-		switchWraps(2);
+async function wrapOnesInfo() {
+	let market = wrapOnes.sell+'/'+wrapOnes.buy;
+	$('wrap-ones-price-label').innerHTML = market;
+	$('wrap-ones-sell-symbol').innerHTML = wrapOnes.sell;
+	$('wrap-ones-buy-symbol').innerHTML  = wrapOnes.buy;
+	$('wrap-ones-sell-icon').src = getIconName(wrapOnes.sell);
+	$('wrap-ones-buy-icon').src  = getIconName(wrapOnes.buy);
+	wrapOnes.price = 1.0;
+	$('wrap-ones-price-value').value = money(wrapOnes.price, 8);
+	calcWrapOnesBuy();
+}
+
+async function wrapUsdsInfo() {
+	let market = wrapUsds.sell+'/'+wrapUsds.buy;
+	$('wrap-usds-price-label').innerHTML = market;
+	$('wrap-usds-sell-symbol').innerHTML = wrapUsds.sell;
+	$('wrap-usds-buy-symbol').innerHTML  = wrapUsds.buy;
+	$('wrap-usds-sell-icon').src = getIconName(wrapUsds.sell);
+	$('wrap-usds-buy-icon').src  = getIconName(wrapUsds.buy);
+	let price = await getWrapUsdsPrice(wrapUsds.sell, wrapUsds.buy);
+	console.log('Price', market, price);
+	if(price){
+		$('wrap-usds-price-value').value = money(price, 8); 
+		wrapUsds.price = price; 
+		calcWrapUsdsBuy();
 	}
 }
 
-async function switchWraps(tab) {
-	if(tab==1){
-		wrap.wrapper = 1;
-		wrap.sell    = 'ONE';
-		wrap.buy     = 'ONEs';
-		wrap.price   = 1.0;
-		wrap.wfee    = 0.01;
-		wrap.ufee    = 0.01;
-		loadWrapPrice('ONE');
-	} else {
-		wrap.wrapper = 2;
-		wrap.sell    = 'ONE';
-		wrap.buy     = 'USDs';
-		wrap.price   = 1.0;
-		wrap.wfee    = 0.01;
-		wrap.ufee    = 0.01;
-		loadWrapPrice('USD');
-	}
-	showWraps();
-}
-
-async function showWraps() {
-	let market = wrap.sell+'/'+wrap.buy;
-	$('wrap-token').innerHTML = wrap.buy;
-	$('wrap-price-label').innerHTML = market;
-	$('wrap-sell-symbol').innerHTML = wrap.sell;
-	$('wrap-buy-symbol').innerHTML  = wrap.buy;
-	$('wrap-sell-icon').src = getIconName(wrap.sell);
-	$('wrap-buy-icon').src  = getIconName(wrap.buy);
-	if(wrap.wrapper==1){ 
-		wrap.price = 1.0;
-		$('wrap-price-value').value = money(wrap.price, 8);
-		calcWrapBuy();
-	} else { /* Price for ONE/USDs */
-		let price = await getWrapPrice(wrap.sell, wrap.buy);
-		console.log('Price', market, price);
-		if(price){
-			$('wrap-price-value').value = price; 
-			wrap.price = price; 
-			calcWrapBuy();
-		}
-	}
-}
-
-async function wrapOnes() {
+async function goWrapOnes() {
 	console.log('Wrapping ONE...')
-	let amount  = validNumber($('wrap-sell-qty').value);
+	let amount  = validNumber($('wrap-ones-sell-qty').value);
 	let wrapper = config.ONESWrapper;
-	let reject  = function(msg, tx) { signWrapTxs(); showWrapError(msg); enableWrap(); }
+	let reject  = function(msg, tx) { signWrapOnesTxs(); showWrapOnesError(msg); enableWrapOnes(); }
 	let txid = await seeswap.wrapOnes(wrapper, amount, reject);
 	console.log('Txid', txid);
 	if(txid){
-		signWrapTxs('ONE payment received');
-		showWrapStatus('Tokens wrapped, check your wallet!');
+		signWrapOnesTxs('ONE payment received');
+		showWrapOnesStatus('Tokens wrapped, check your wallet!');
 	} else {
-		signWrapTxs(txid);
-		showWrapError('Wrapping error!');
+		signWrapOnesTxs(txid);
+		showWrapOnesError('Wrapping error!');
     	return false;
 	}
 	return true;
 }
 
-async function unwrapOnes() {
+async function goUnwrapOnes() {
 	console.log('Unwrapping ONE...')
-	let amount  = validNumber($('wrap-sell-qty').value);
+	let amount  = validNumber($('wrap-ones-sell-qty').value);
 	let wrapper = config.ONESWrapper;
-	let reject = function(msg, tx) { signWrapTxs(); showWrapError(msg); enableWrap(); }
+	let reject = function(msg, tx) { signWrapOnesTxs(); showWrapOnesError(msg); enableWrapOnes(); }
 	let txid = await seeswap.unwrapOnes(wrapper, amount, reject);
 	console.log('Txid', txid);
 	if(txid){
-		signWrapTxs('ONEs tokens received');
-		showWrapStatus('Tokens unwrapped, check your wallet!');
+		signWrapOnesTxs('ONEs tokens received');
+		showWrapOnesStatus('Tokens unwrapped, check your wallet!');
 	} else { 
-		signWrapTxs(txid);
-    	showWrapError('Unwrapping error!');
+		signWrapOnesTxs(txid);
+    	showWrapOnesError('Unwrapping error!');
     	return false;
 	}
 	return true;
 }
 
-async function wrapUsds() {
-	console.log('Wrapping...')
-	let amount = $('wrap-sell-qty').value;
-	let destin = config.USDSWrapper;
-	let reject = function(msg, tx) { signWrapTxs(); showWrapError(msg); enableWrap(); }
-	let txid = await seeswap.sendPayment(amount, destin, reject);
+async function goWrapUsds() {
+	console.log('Wrapping ONE/USDs...')
+	let amount  = validNumber($('wrap-usds-sell-qty').value);
+	let wrapper = config.USDSWrapper;
+	let reject  = function(msg, tx) { signWrapUsdsTxs(); showWrapUsdsError(msg); enableWrapUsds(); }
+	let txid = await seeswap.wrapUsds(wrapper, amount, reject);
 	console.log('Txid', txid);
 	if(txid){
-		signWrapTxs('Payment sent');
-		showWrapWait('Wait, receiving USDs')
-		let opt = {method:'get'};
-		// TODO: WAIT 5 SECS BEFORE CALLING
-		let res = await fetch('api/wrap/'+txid, opt);
-		let inf = await res.text();
-		if(inf && inf.startsWith('OK')){ 
-			showWrapStatus('Tokens wrapped, check your wallet!');
-		} else { 
-			signWrapTxs(txid);
-			showWrapError('Wrapping error, save tx id!');
-			return false;
-		}
+		signWrapUsdsTxs('ONE payment received');
+		showWrapUsdsStatus('Tokens wrapped, check your wallet!');
 	} else {
-    	//showWrapError('Payment error!');
+		signWrapUsdsTxs(txid);
+		showWrapUsdsError('Wrapping error!');
     	return false;
 	}
 	return true;
 }
 
-async function unwrapUsds() {
-	console.log('Unwrapping...')
-	let amount = $('wrap-sell-qty').value;
-	let destin = config.USDSWrapper;
-	let reject = function(msg, tx) { signWrapTxs(); showWrapError(msg); enableWrap(); }
-	let txid   = await seeswap.sendToken(config.USDSAddress, amount, destin, reject);
+async function goUnwrapUsds() {
+	console.log('Unwrapping USDs/ONE...')
+	let amount  = validNumber($('wrap-usds-sell-qty').value);
+	let wrapper = config.USDSWrapper;
+	let reject = function(msg, tx) { signWrapUsdsTxs(); showWrapUsdsError(msg); enableWrapUsds(); }
+	let txid = await seeswap.unwrapUsds(wrapper, amount, reject);
 	console.log('Txid', txid);
 	if(txid){
-		signWrapTxs('USDs token sent');
-		showWrapWait('Wait, receiving ONE')
-		let opt = {method:'get'};
-		// TODO: WAIT 5 SECS BEFORE CALLING
-		let res = await fetch('api/unwrap/'+txid, opt);
-		let inf = await res.text();
-		if(inf && inf.startsWith('OK')){ 
-			showWrapStatus('Tokens unwrapped, check your wallet!');
-		} else { 
-			signWrapTxs(txid);
-			showWrapError('Unwrapping error, save tx id!');
-			return false;
-		}
-	} else {
-    	//showWrapError('Payment error!');
+		signWrapUsdsTxs('USDs tokens received');
+		showWrapUsdsStatus('Tokens unwrapped, check your wallet!');
+	} else { 
+		signWrapUsdsTxs(txid);
+    	showWrapUsdsError('Unwrapping error!'); // TODO: fetch error message
     	return false;
 	}
 	return true;
@@ -772,8 +888,10 @@ function enableEvents() {
 	$('pools-list').addEventListener('click', function(event){onTableClick(event)},false);
 	$('sell-asset-qty').addEventListener('keyup', calcBuy, true);
 	$('buy-asset-qty').addEventListener('keyup', calcSell, true);
-	$('wrap-sell-qty').addEventListener('keyup', calcWrapBuy, true);
-	$('wrap-buy-qty').addEventListener('keyup', calcWrapSell, true);
+	$('wrap-ones-sell-qty').addEventListener('keyup', calcWrapOnesBuy, true);
+	$('wrap-ones-buy-qty').addEventListener('keyup', calcWrapOnesSell, true);
+	$('wrap-usds-sell-qty').addEventListener('keyup', calcWrapUsdsBuy, true);
+	$('wrap-usds-buy-qty').addEventListener('keyup', calcWrapUsdsSell, true);
 }
 
 function onWallet() {
@@ -804,47 +922,126 @@ async function onSwitch() {
 	swap.buy  = tmp;
 	$('sell-asset-qty').value = $('buy-asset-qty').value.replace(/,/g, '');
 	await showAssets();
+	await showMyBalances();
 	calcBuy();
 }
 
-async function onWrapSwitch() {
-	let tmp   = wrap.sell;
-	wrap.sell = wrap.buy;
-	wrap.buy  = tmp;
-	$('wrap-sell-qty').value = $('wrap-buy-qty').value.replace(/,/g, '');
-	$('wrap-swap').innerHTML = (wrap.sell=='ONE'?'WRAP':'UNWRAP');
-	await showWraps();
+async function onWrapTabSel(tab) {
+	if(tab==1){
+		$('wrap-tab1').classList.add('wrap-sel');
+		$('wrap-tab2').classList.remove('wrap-sel');
+        $('ones-form').classList.add('selected');
+        $('usds-form').classList.remove('selected');
+		//switchWraps(1);
+		//wrapOnesInfo();
+		loadWrapOnesPrice();
+		loadWrapOnesBalance();
+	} else {
+		$('wrap-tab1').classList.remove('wrap-sel');
+		$('wrap-tab2').classList.add('wrap-sel');
+        $('ones-form').classList.remove('selected');
+        $('usds-form').classList.add('selected');
+		//switchWraps(2);
+		//wrapUsdsInfo();
+		loadWrapUsdsPrice();
+		loadWrapUsdsBalance();
+	}
 }
 
-async function onWrapExecute() {
-	console.log('onWrap', wrap);
-	wrap.amount = validNumber($('wrap-sell-qty').value);
-	if(!wrap.amount || wrap.amount<0) { 
-		showWrapWarn('Amount must be greater than zero'); 
+async function onWrapOnesSwitch() {
+	let tmp   = wrapOnes.sell;
+	wrapOnes.sell = wrapOnes.buy;
+	wrapOnes.buy  = tmp;
+	$('wrap-ones-swap').innerHTML = (wrapOnes.sell=='ONE'?'WRAP':'UNWRAP');
+	$('wrap-ones-sell-qty').value = $('wrap-ones-buy-qty').value.replace(/,/g, '');
+	if(wrapOnes.sell=='ONE'){
+		$('wrap-ones-sell-liquidity').innerHTML = 'Liquidity: '  + money(wrapOnes.oneBal, 8);
+		$('wrap-ones-buy-liquidity').innerHTML  = 'Liquidity: '  + money(wrapOnes.onesBal, 8);
+		$('wrap-ones-sell-mybalance').innerHTML = 'My Balance: ' + money(wrapOnes.myOneBal, 8);
+		$('wrap-ones-buy-mybalance').innerHTML  = 'My Balance: ' + money(wrapOnes.myOnesBal, 8);
+	} else {
+		$('wrap-ones-sell-liquidity').innerHTML = 'Liquidity: '  + money(wrapOnes.onesBal, 8);
+		$('wrap-ones-buy-liquidity').innerHTML  = 'Liquidity: '  + money(wrapOnes.oneBal, 8);
+		$('wrap-ones-sell-mybalance').innerHTML = 'My Balance: ' + money(wrapOnes.myOnesBal, 8);
+		$('wrap-ones-buy-mybalance').innerHTML  = 'My Balance: ' + money(wrapOnes.myOneBal, 8);
+	}
+	wrapOnesInfo();
+}
+
+async function onWrapUsdsSwitch() {
+	let tmp   = wrapUsds.sell;
+	wrapUsds.sell = wrapUsds.buy;
+	wrapUsds.buy  = tmp;
+	$('wrap-usds-swap').innerHTML = (wrapUsds.sell=='ONE'?'WRAP':'UNWRAP');
+	$('wrap-usds-sell-qty').value = $('wrap-usds-buy-qty').value.replace(/,/g, '');
+	if(wrapUsds.sell=='ONE'){
+		$('wrap-usds-sell-liquidity').innerHTML = 'Liquidity: '  + money(wrapUsds.oneBal, 8);
+		$('wrap-usds-buy-liquidity').innerHTML  = 'Liquidity: '  + money(wrapUsds.usdsBal, 8);
+		$('wrap-usds-sell-mybalance').innerHTML = 'My Balance: ' + money(wrapUsds.myOneBal, 8);
+		$('wrap-usds-buy-mybalance').innerHTML  = 'My Balance: ' + money(wrapUsds.myUsdsBal, 8);
+	} else {
+		$('wrap-usds-sell-liquidity').innerHTML = 'Liquidity: '  + money(wrapUsds.usdsBal, 8);
+		$('wrap-usds-buy-liquidity').innerHTML  = 'Liquidity: '  + money(wrapUsds.oneBal, 8);
+		$('wrap-usds-sell-mybalance').innerHTML = 'My Balance: ' + money(wrapUsds.myUsdsBal, 8);
+		$('wrap-usds-buy-mybalance').innerHTML  = 'My Balance: ' + money(wrapUsds.myOneBal, 8);
+	}
+	wrapUsdsInfo();
+}
+
+async function onWrapOnesExecute() {
+	console.log('onWrapOnes', wrapOnes);
+	wrapOnes.amount = validNumber($('wrap-ones-sell-qty').value);
+	if(!wrapOnes.amount || wrapOnes.amount<0) { 
+		showWrapOnesWarn('Amount must be greater than zero'); 
 		return;
 	}
-	disableWrap()
-	signWrapTxs('You must sign one transaction')
-    showWrapWait('Wait, approving transaction');
+	disableWrapOnes()
+	signWrapOnesTxs('You must sign one transaction')
+    showWrapOnesWait('Wait, approving transaction');
     let ok = false;
-	if(wrap.sell=='ONE'){ 
-		if(wrap.buy=='ONEs'){ ok = await wrapOnes(); }
-		else if(wrap.buy=='USDs'){ ok = await wrapUsds(); }
-		else { console.log('Wrap what?'); }
-	} else if(wrap.buy=='ONE') { 
-		if(wrap.sell=='ONEs'){ ok = await unwrapOnes(); }
-		else if(wrap.sell=='USDs'){ ok = await unwrapUsds(); }
-		else { console.log('Unwrap what?'); }
+	if(wrapOnes.sell=='ONE'){ 
+		ok = await goWrapOnes();
+	} else if(wrapOnes.buy=='ONE') { 
+		ok = await goUnwrapOnes();
+	} else {
+    	showWrapError('Error wrapping Ones assets');
+	}
+    if(ok) {
+    	//signWrapOnesTxs();
+    	wrapOnesInfo();
+    	loadWrapOnesBalance();
+    } else {
+    	//
+    }
+    enableWrapOnes();
+}
+
+async function onWrapUsdsExecute() {
+	console.log('onWrapUsds', wrapUsds);
+	wrapUsds.amount = validNumber($('wrap-usds-sell-qty').value);
+	if(!wrapUsds.amount || wrapUsds.amount<0) { 
+		showWrapUsdsWarn('Amount must be greater than zero'); 
+		return;
+	}
+	disableWrapUsds()
+	signWrapUsdsTxs('You must sign one transaction')
+    showWrapUsdsWait('Wait, approving transaction');
+    let ok = false;
+	if(wrapUsds.sell=='ONE'){ 
+		ok = await goWrapUsds();
+	} else if(wrapUsds.buy=='ONE') { 
+		ok = await goUnwrapUsds();
 	} else {
     	showWrapError('Error wrapping assets');
 	}
     if(ok) {
-    	//signWrapTxs();
-    	showWraps();
+    	//signWrapUsdsTxs();
+    	wrapUsdsInfo();
+    	loadWrapUsdsBalance();
     } else {
     	//
     }
-    enableWrap();
+    enableWrapUsds();
 }
 
 async function onSwapExecute() {
@@ -866,9 +1063,46 @@ async function onSwapExecute() {
     	signTxs();
     	showStatus('Assets swapped!');
     	showAssets();
+    	showMyBalances();
     	updatePoolRow(pool);
     }
     enableSwap();
+}
+
+function sellMaxAmount() {
+	let amount = swap.myBalSell;
+	$('sell-asset-qty').value = amount;
+	calcBuy();
+}
+
+function buyMaxAmount() {
+	let amount = swap.myBalBuy;
+	$('buy-asset-qty').value = amount;
+	calcSell();
+}
+
+function wrapOnesSellMaxAmount() {
+	let amount = (wrapOnes.sell=='ONE' ? wrapOnes.myOneBal : wrapOnes.myOnesBal);
+	$('wrap-ones-sell-qty').value = money(amount, 8);
+	calcWrapOnesBuy();
+}
+
+function wrapOnesBuyMaxAmount() {
+	let amount = (wrapOnes.buy=='ONE' ? wrapOnes.myOneBal : wrapOnes.myOnesBal);
+	$('wrap-ones-buy-qty').value = money(amount, 8);
+	calcWrapOnesSell();
+}
+
+function wrapUsdsSellMaxAmount() {
+	let amount = (wrapUsds.sell=='ONE' ? wrapUsds.myOneBal : wrapUsds.myUsdsBal);
+	$('wrap-usds-sell-qty').value = money(amount, 8);
+	calcWrapUsdsBuy();
+}
+
+function wrapUsdsBuyMaxAmount() {
+	let amount = (wrapUsds.buy=='ONE' ? wrapUsds.myOneBal : wrapUsds.myUsdsBal);
+	$('wrap-usds-buy-qty').value = money(amount, 8);
+	calcWrapUsdsSell();
 }
 
 
@@ -877,9 +1111,12 @@ async function onSwapExecute() {
 async function main() {
 	setColorTheme();
 	loadTicker(config.initicker);
-	loadWrapPrice();
+	loadWrapOnesPrice();
+	loadWrapUsdsPrice();
 	await loadPools();
 	if(await loadSeeSwap()){ 
+        await connectWallet()
+		loadWrapOnesBalance();
 		let poolId = getFirstPoolId();
 		selectPool(poolId);
 		loadPoolPrices();

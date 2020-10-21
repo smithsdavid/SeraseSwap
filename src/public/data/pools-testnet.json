@@ -1,330 +1,180 @@
 {
-	"updated":1598880360454,
+	"updated":1602349931692,
 	"pools":{
-		"0x935e130a165941CDa3f1B529Ca75fcF6210481C7":{
+		"0xdaa2dbfb17afa397991773d392a560d4c6505cb5":{
 			"active": true,
-			"address": "0x935e130a165941CDa3f1B529Ca75fcF6210481C7",
-			"name": "tONE/SEE",
-    		"base":  "tONE", 
-    		"quote": "SEE", 
+			"address": "0xdaa2dbfb17afa397991773d392a560d4c6505cb5",
+			"name": "SEE/ONEs",
+    		"base":  "SEE", 
+    		"quote": "ONEs", 
 			"mktcap": 0.0,
 			"volume24": 0.0,
 			"swapfee": 0.005,
 			"tokens":{
-				"tONE":{
-					"address":"0xBcffe119ba1dCEdDB9BfeD1Ac21d475033c6F771",
-					"symbol":"tONE",
-					"name": "ONE Testnet",
-					"icon":"assets/one.png",
+				"SEE":{
+					"address":"0x4E2653B73726b979E9e8a38594f61818BAe15cAA",
+					"symbol":"SEE",
+					"name": "SEE Testnet",
+					"icon":"assets/see.png",
 					"weight": 0.5,
 					"price": 0.0,
 					"balance": 0.0
 				},
-				"SEE":{
-					"address":"0x5B4596E8fC1C5e4817b65FFBb82522C8B29A8b52",
-					"symbol":"SEE",
-					"name": "SEE Testnet",
-					"icon":"assets/see.png",
+				"ONEs":{
+					"address":"0xFD2117D4Ba367275e0b8186F8d98Aac96cCE9700",
+					"symbol":"ONEs",
+					"name": "ONE Synth",
+					"icon":"assets/ones.png",
 					"weight": 0.5,
 					"price": 0.0,
 					"balance": 0.0
 				}
 			}
 		},
-		"0x2ae84873582106361BA0BACfC419c5f8FFB78ef6":{
+		"0x33813c9044a0ff2b2bd800da794668c64e6e1a1d":{
 			"active": true,
-			"address": "0x2ae84873582106361BA0BACfC419c5f8FFB78ef6",
-			"name": "tBTC/SEE",
-    		"base":  "tBTC", 
-    		"quote": "SEE", 
+			"address": "0x33813c9044a0ff2b2bd800da794668c64e6e1a1d",
+			"name": "ARANK/ONEs",
+    		"base":  "ARANK", 
+    		"quote": "ONEs", 
 			"mktcap": 0.0,
 			"volume24": 0.0,
 			"swapfee": 0.005,
 			"tokens":{
-				"tBTC":{
-					"address":"0x34c68Ac37eA92127C6A3FB4771560343305e7a80",
-					"symbol":"tBTC",
-					"name": "BTC Testnet",
-					"icon":"assets/btc.png",
+				"ARANK":{
+					"address":"0xbDE7800c2A4ba6D56b4CABd80e3022a4d17e11bA",
+					"symbol":"ARANK",
+					"name": "ARANK Testnet",
+					"icon":"assets/arank.png",
 					"weight": 0.5,
 					"price": 0.0,
 					"balance": 0.0
 				},
-				"SEE":{
-					"address":"0x5B4596E8fC1C5e4817b65FFBb82522C8B29A8b52",
-					"symbol":"SEE",
-					"name": "SEE Testnet",
-					"icon":"assets/see.png",
+				"ONEs":{
+					"address":"0xFD2117D4Ba367275e0b8186F8d98Aac96cCE9700",
+					"symbol":"ONEs",
+					"name": "ONE Synth",
+					"icon":"assets/ones.png",
 					"weight": 0.5,
 					"price": 0.0,
 					"balance": 0.0
 				}
 			}
 		},
-		"0x0561C925106232B0A23871fDe4eD3BE6F7BA4150":{
+		"0x9aae895d2f04a83773f763be68f030286e0f93dc":{
 			"active": true,
-			"address": "0x0561C925106232B0A23871fDe4eD3BE6F7BA4150",
-			"name": "tETH/SEE",
-    		"base":  "tETH", 
-    		"quote": "SEE", 
+			"address": "0x9aae895d2f04a83773f763be68f030286e0f93dc",
+			"name": "BUSDs/ONEs",
+    		"base":  "BUSDs", 
+    		"quote": "ONEs", 
 			"mktcap": 0.0,
 			"volume24": 0.0,
 			"swapfee": 0.005,
 			"tokens":{
-				"tETH":{
-					"address":"0x3d9ded6269271b0377530ba3c9d2ea1e310d204d",
-					"symbol":"tETH",
-					"name": "ETH Testnet",
-					"icon":"assets/eth.png",
+				"BUSDs":{
+					"address":"0x6f51045Ac83dD7D17317922F691fd96339351A83",
+					"symbol":"BUSDs",
+					"name": "BUSD Synth",
+					"icon":"assets/busd.png",
 					"weight": 0.5,
 					"price": 0.0,
 					"balance": 0.0
 				},
-				"SEE":{
-					"address":"0x5B4596E8fC1C5e4817b65FFBb82522C8B29A8b52",
-					"symbol":"SEE",
-					"name": "SEE Testnet",
-					"icon":"assets/see.png",
+				"ONEs":{
+					"address":"0xFD2117D4Ba367275e0b8186F8d98Aac96cCE9700",
+					"symbol":"ONEs",
+					"name": "ONE Synth",
+					"icon":"assets/ones.png",
 					"weight": 0.5,
 					"price": 0.0,
 					"balance": 0.0
 				}
 			}
 		},
-		"0x706799390972Eb514089a2431bd8E09ac1bf7ed3":{
+		"0x63e61dc5eede28c2a3c6e6d11121b9309598f049":{
 			"active": true,
-			"address": "0x706799390972Eb514089a2431bd8E09ac1bf7ed3",
-			"name": "tXRP/SEE",
-    		"base":  "tXRP", 
-    		"quote": "SEE", 
+			"address": "0x63e61dc5eede28c2a3c6e6d11121b9309598f049",
+			"name": "EUSK/ONEs",
+    		"base":  "EUSK", 
+    		"quote": "ONEs", 
 			"mktcap": 0.0,
 			"volume24": 0.0,
 			"swapfee": 0.005,
 			"tokens":{
-				"tXRP":{
-					"address":"0xa96e42155009dfcebb89b9895826dba982e5f6f9",
-					"symbol":"tXRP",
-					"name": "XRP Testnet",
-					"icon":"assets/xrp.png",
+				"EUSK":{
+					"address":"0x7320e4105f6D189045db506EA266B3261C88663B",
+					"symbol":"EUSK",
+					"name": "EUSK Testnet",
+					"icon":"assets/eusk.png",
 					"weight": 0.5,
 					"price": 0.0,
 					"balance": 0.0
 				},
-				"SEE":{
-					"address":"0x5B4596E8fC1C5e4817b65FFBb82522C8B29A8b52",
-					"symbol":"SEE",
-					"name": "SEE Testnet",
-					"icon":"assets/see.png",
+				"ONEs":{
+					"address":"0xFD2117D4Ba367275e0b8186F8d98Aac96cCE9700",
+					"symbol":"ONEs",
+					"name": "ONE Synth",
+					"icon":"assets/ones.png",
 					"weight": 0.5,
 					"price": 0.0,
 					"balance": 0.0
 				}
 			}
 		},
-		"0x80BD8E7c18AaF3a091E074B5534Da5B052673982":{
+		"0x16d86b2fc07048fb320365636fdedf432f19f47e":{
 			"active": true,
-			"address": "0x80BD8E7c18AaF3a091E074B5534Da5B052673982",
-			"name": "tUSD/SEE",
-    		"base":  "tUSD", 
-    		"quote": "SEE", 
+			"address": "0x16d86b2fc07048fb320365636fdedf432f19f47e",
+			"name": "LINKs/ONEs",
+    		"base":  "LINKs", 
+    		"quote": "ONEs", 
 			"mktcap": 0.0,
 			"volume24": 0.0,
 			"swapfee": 0.005,
 			"tokens":{
-				"tUSD":{
-					"address":"0xf0c4beb5ccd5e26aff44ed7dcbbfabc7c5334a3a",
-					"symbol":"tUSD",
-					"name": "USD Testnet",
-					"icon":"assets/usd.png",
+				"LINKs":{
+					"address":"0x2606dC3e2838629B67F30cB236918A58EDB9960e",
+					"symbol":"LINKs",
+					"name": "LINK Synth",
+					"icon":"assets/link.png",
 					"weight": 0.5,
 					"price": 0.0,
 					"balance": 0.0
 				},
-				"SEE":{
-					"address":"0x5B4596E8fC1C5e4817b65FFBb82522C8B29A8b52",
-					"symbol":"SEE",
-					"name": "SEE Testnet",
-					"icon":"assets/see.png",
+				"ONEs":{
+					"address":"0xFD2117D4Ba367275e0b8186F8d98Aac96cCE9700",
+					"symbol":"ONEs",
+					"name": "ONE Synth",
+					"icon":"assets/ones.png",
 					"weight": 0.5,
 					"price": 0.0,
 					"balance": 0.0
 				}
 			}
 		},
-		"0xb5825a1694A043CcF63202AD90A865CCd85e6aEF":{
+		"0x8f7b0f7e4cdc54b544dcb432792fe088f49413c5":{
 			"active": true,
-			"address": "0xb5825a1694A043CcF63202AD90A865CCd85e6aEF",
-			"name": "tBNB/SEE",
-    		"base":  "tBNB", 
-    		"quote": "SEE", 
+			"address": "0x8f7b0f7e4cdc54b544dcb432792fe088f49413c5",
+			"name": "SEED/ONEs",
+    		"base":  "SEED", 
+    		"quote": "ONEs", 
 			"mktcap": 0.0,
 			"volume24": 0.0,
 			"swapfee": 0.005,
 			"tokens":{
-				"tBNB":{
-					"address":"0x861df59a84bb817918bbf8e0a16ac377b6d6f873",
-					"symbol":"tBNB",
-					"name": "BNB Testnet",
-					"icon":"assets/bnb.png",
+				"SEED":{
+					"address":"0x2E14dC3EF14716c6ec3AF4Bb2D69171254368871",
+					"symbol":"SEED",
+					"name": "SEED Testnet",
+					"icon":"assets/seed.png",
 					"weight": 0.5,
 					"price": 0.0,
 					"balance": 0.0
 				},
-				"SEE":{
-					"address":"0x5B4596E8fC1C5e4817b65FFBb82522C8B29A8b52",
-					"symbol":"SEE",
-					"name": "SEE Testnet",
-					"icon":"assets/see.png",
-					"weight": 0.5,
-					"price": 0.0,
-					"balance": 0.0
-				}
-			}
-		},
-		"0x2dfC22c1AF59b5f2cd592aCa83eC6f87dAC30B44":{
-			"active": true,
-			"address": "0x2dfC22c1AF59b5f2cd592aCa83eC6f87dAC30B44",
-			"name": "tLNK/SEE",
-    		"base":  "tLNK", 
-    		"quote": "SEE", 
-			"mktcap": 0.0,
-			"volume24": 0.0,
-			"swapfee": 0.005,
-			"tokens":{
-				"tLNK":{
-					"address":"0x910e5ad539b1ee5ef53efb6c9896f54830e926b6",
-					"symbol":"tLNK",
-					"name": "LNK Testnet",
-					"icon":"assets/lnk.png",
-					"weight": 0.5,
-					"price": 0.0,
-					"balance": 0.0
-				},
-				"SEE":{
-					"address":"0x5B4596E8fC1C5e4817b65FFBb82522C8B29A8b52",
-					"symbol":"SEE",
-					"name": "SEE Testnet",
-					"icon":"assets/see.png",
-					"weight": 0.5,
-					"price": 0.0,
-					"balance": 0.0
-				}
-			}
-		},
-		"0x06a04d9C32Cb987545A447Cab62067165e78B9FB":{
-			"active": true,
-			"address": "0x06a04d9C32Cb987545A447Cab62067165e78B9FB",
-			"name": "tDOT/SEE",
-    		"base":  "tDOT", 
-    		"quote": "SEE", 
-			"mktcap": 0.0,
-			"volume24": 0.0,
-			"swapfee": 0.005,
-			"tokens":{
-				"tDOT":{
-					"address":"0xb7d843692bf193f132ed09dca190e8c27fd8ef64",
-					"symbol":"tDOT",
-					"name": "DOT Testnet",
-					"icon":"assets/dot.png",
-					"weight": 0.5,
-					"price": 0.0,
-					"balance": 0.0
-				},
-				"SEE":{
-					"address":"0x5B4596E8fC1C5e4817b65FFBb82522C8B29A8b52",
-					"symbol":"SEE",
-					"name": "SEE Testnet",
-					"icon":"assets/see.png",
-					"weight": 0.5,
-					"price": 0.0,
-					"balance": 0.0
-				}
-			}
-		},
-		"0x5557D8dFCB59d79334a12B511AacA0156211965F":{
-			"active": true,
-			"address": "0x5557D8dFCB59d79334a12B511AacA0156211965F",
-			"name": "tBCH/SEE",
-    		"base":  "tBCH", 
-    		"quote": "SEE", 
-			"mktcap": 0.0,
-			"volume24": 0.0,
-			"swapfee": 0.005,
-			"tokens":{
-				"tBCH":{
-					"address":"0x19be116818d23c361abd975636428e62b8cb106a",
-					"symbol":"tBCH",
-					"name": "BCH Testnet",
-					"icon":"assets/bch.png",
-					"weight": 0.5,
-					"price": 0.0,
-					"balance": 0.0
-				},
-				"SEE":{
-					"address":"0x5B4596E8fC1C5e4817b65FFBb82522C8B29A8b52",
-					"symbol":"SEE",
-					"name": "SEE Testnet",
-					"icon":"assets/see.png",
-					"weight": 0.5,
-					"price": 0.0,
-					"balance": 0.0
-				}
-			}
-		},
-		"0x7681d5bb1036ba8c70b6cbce73302BBe0b21AD64":{
-			"active": true,
-			"address": "0x7681d5bb1036ba8c70b6cbce73302BBe0b21AD64",
-			"name": "tBSV/SEE",
-    		"base":  "tBSV", 
-    		"quote": "SEE", 
-			"mktcap": 0.0,
-			"volume24": 0.0,
-			"swapfee": 0.005,
-			"tokens":{
-				"tBSV":{
-					"address":"0x4513b520ed9f87217eed157107ca8f1b99df05bf",
-					"symbol":"tBSV",
-					"name": "BSV Testnet",
-					"icon":"assets/bsv.png",
-					"weight": 0.5,
-					"price": 0.0,
-					"balance": 0.0
-				},
-				"SEE":{
-					"address":"0x5B4596E8fC1C5e4817b65FFBb82522C8B29A8b52",
-					"symbol":"SEE",
-					"name": "SEE Testnet",
-					"icon":"assets/see.png",
-					"weight": 0.5,
-					"price": 0.0,
-					"balance": 0.0
-				}
-			}
-		},
-		"0x5315f8B7949A199be3668E67cCB7e2C70A14a64B":{
-			"active": true,
-			"address": "0x5315f8B7949A199be3668E67cCB7e2C70A14a64B",
-			"name": "tLTC/SEE",
-    		"base":  "tLTC", 
-    		"quote": "SEE", 
-			"mktcap": 0.0,
-			"volume24": 0.0,
-			"swapfee": 0.005,
-			"tokens":{
-				"tLTC":{
-					"address":"0x67474bf0b65597f156ad66aaeaadafc759b7447e",
-					"symbol":"tLTC",
-					"name": "LTC Testnet",
-					"icon":"assets/ltc.png",
-					"weight": 0.5,
-					"price": 0.0,
-					"balance": 0.0
-				},
-				"SEE":{
-					"address":"0x5B4596E8fC1C5e4817b65FFBb82522C8B29A8b52",
-					"symbol":"SEE",
-					"name": "SEE Testnet",
-					"icon":"assets/see.png",
+				"ONEs":{
+					"address":"0xFD2117D4Ba367275e0b8186F8d98Aac96cCE9700",
+					"symbol":"ONEs",
+					"name": "ONE Synth",
+					"icon":"assets/ones.png",
 					"weight": 0.5,
 					"price": 0.0,
 					"balance": 0.0
