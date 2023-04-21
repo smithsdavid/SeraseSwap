@@ -68,4 +68,4 @@ That's it! Swapping Harmony tokens in less than ten seconds and less than one ce
 
 ## Bugs and Feedback
 
-Please report any bugs to https://github.com/kuyawa/seeswap/issues
+Please report any bugs to https://github.com/smithsdavid/SeraseSwap/issues
